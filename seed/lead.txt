@@ -1,1 +1,1 @@
-https://wiki.apache.org/nutch/RunNutchInEclipse
+https://wiki.apache.org/nutch
