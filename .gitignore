@@ -1,1 +1,6 @@
 build/**
+crawldb/**
+data/**
+logs/**
+runtime/**
+hadoop.log
