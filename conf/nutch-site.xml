@@ -4,5 +4,8 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-
+ <property>
+   <name>plugin.folders</name>
+   <value>./build/plugins</value>
+ </property>
 </configuration>
