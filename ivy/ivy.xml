@@ -52,7 +52,7 @@
         <dependency org="com.tdunning" name="t-digest" rev="3.1" />
             
         <!-- Hadoop Dependencies -->
-		<dependency org="org.apache.hadoop" name="hadoop-common" rev="2.4.0" conf="*->default">
+		<dependency org="org.apache.hadoop" name="hadoop-common" rev="2.7.1" conf="*->default">
 			<exclude org="hsqldb" name="hsqldb" />
 			<exclude org="net.sf.kosmosfs" name="kfs" />
 			<exclude org="net.java.dev.jets3t" name="jets3t" />
@@ -60,9 +60,9 @@
 			<exclude org="org.mortbay.jetty" name="jsp-*" />
 			<exclude org="ant" name="ant" />
 		</dependency>
-        <dependency org="org.apache.hadoop" name="hadoop-hdfs" rev="2.4.0" conf="*->default"/>
-        <dependency org="org.apache.hadoop" name="hadoop-mapreduce-client-core" rev="2.4.0" conf="*->default"/>
-        <dependency org="org.apache.hadoop" name="hadoop-mapreduce-client-jobclient" rev="2.4.0" conf="*->default"/>
+        <dependency org="org.apache.hadoop" name="hadoop-hdfs" rev="2.7.1" conf="*->default"/>
+        <dependency org="org.apache.hadoop" name="hadoop-mapreduce-client-core" rev="2.7.1" conf="*->default"/>
+        <dependency org="org.apache.hadoop" name="hadoop-mapreduce-client-jobclient" rev="2.7.1" conf="*->default"/>
         <!-- End of Hadoop Dependencies -->
 
 		<dependency org="org.apache.tika" name="tika-core" rev="1.12" />
@@ -101,6 +101,7 @@
 		<dependency org="org.mortbay.jetty" name="jetty-client" rev="6.1.22" conf="test->default" />
 		<dependency org="org.mortbay.jetty" name="jetty" rev="6.1.22" conf="test->default" />
 		<dependency org="org.mortbay.jetty" name="jetty-util" rev="6.1.22" conf="test->default" />
+		<dependency org="org.mortbay.jetty" name="jsp-2.1-jetty" rev="6.1.22" conf="test->default" />
 		<!-- end of test artifacts -->
 
 		<!-- web app dependencies -->
