@@ -1,1 +1,2 @@
-https://wiki.apache.org/nutch
+http://wiki.apache.org/nutch/
+http://hadoop.apache.org/

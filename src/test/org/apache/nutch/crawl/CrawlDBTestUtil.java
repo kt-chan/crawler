@@ -31,6 +31,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.MapFile;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.MapFile.Writer.Option;
+import org.apache.nutch.util.NutchConfiguration;
 import org.apache.hadoop.io.Text;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
@@ -93,7 +94,10 @@ public class CrawlDBTestUtil {
   public static Configuration createConfiguration() {
     Configuration conf = new Configuration();
     conf.addResource("nutch-default.xml");
-    conf.addResource("crawl-tests.xml");
+    conf.addResource("nutch-site.xml");
+    
+    // production setup override
+    // return NutchConfiguration.create();
     return conf;
   }
 

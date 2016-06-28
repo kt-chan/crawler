@@ -79,7 +79,7 @@ set NUTCH_OPTS=-Xmx1000m -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.
 echo Using Nutch opts: %NUTCH_OPTS%
 
 rem Add everything from lib to classpath
-set CLASSPATH=%CLASSPATH%;"%NUTCH_HOME%\lib\*"
+set CLASSPATH=%CLASSPATH%;"%NUTCH_HOME%\lib\*.jar"
 
 rem Determine the Java class to trigger
 if "%1" == "crawl" (

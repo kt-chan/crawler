@@ -3,4 +3,6 @@ crawldb/**
 data/**
 logs/**
 runtime/**
+tmp/**
+test/**
 hadoop.log
