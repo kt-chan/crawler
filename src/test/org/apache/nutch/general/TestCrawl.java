@@ -199,7 +199,7 @@ public class TestCrawl {
 	 */
 	public void testInject() throws IOException {
 
-		int rounds = 1;
+		int rounds = 2;
 
 		Injector injector = new Injector(conf);
 		Generator generator = new Generator(conf);
@@ -213,26 +213,30 @@ public class TestCrawl {
 			injector.run(NUTCH_ARGS.get(MODES.INJECT));
 
 			for (int i = 0; i < rounds; i++) {
+
 				generator.run(NUTCH_ARGS.get(MODES.GENERATE));
 				FileStatus[] statuses = fs.listStatus(segPath);
+				try {
+					for (FileStatus status : statuses) {
+						NUTCH_ARGS.get(MODES.FETCH)[0] = new Path(segPath.toString(), status.getPath().getName())
+								.toString();
+						fetcher.run(NUTCH_ARGS.get(MODES.FETCH));
+					}
 
-				for (FileStatus status : statuses) {
-					NUTCH_ARGS.get(MODES.FETCH)[0] = new Path(segPath.toString(), status.getPath().getName())
-							.toString();
-					fetcher.run(NUTCH_ARGS.get(MODES.FETCH));
+					for (FileStatus status : statuses) {
+						NUTCH_ARGS.get(MODES.PARSE)[0] = new Path(segPath.toString(), status.getPath().getName())
+								.toString();
+						parser.run(NUTCH_ARGS.get(MODES.PARSE));
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-
-				for (FileStatus status : statuses) {
-					NUTCH_ARGS.get(MODES.PARSE)[0] = new Path(segPath.toString(), status.getPath().getName())
-							.toString();
-					parser.run(NUTCH_ARGS.get(MODES.PARSE));
-				}
-
+				// update crawldb
 				crawldb.run(NUTCH_ARGS.get(MODES.UPDATEDB));
 			}
-			linkdb.run(NUTCH_ARGS.get(MODES.INVERTLINKS));
 
 			// invertlinks
+			linkdb.run(NUTCH_ARGS.get(MODES.INVERTLINKS));
 
 			// indexing to solr
 			IndexingJob solrIndexer = new IndexingJob(conf);
@@ -246,6 +250,8 @@ public class TestCrawl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			parser.close();
+			linkdb.close();
 			linkdbReader.close();
 		}
 	}
@@ -267,9 +273,10 @@ public class TestCrawl {
 		String[] args_parse = new String[1];
 		args_parse[0] = segPath.toString();
 
-		String[] args_updatedb = new String[2];
+		String[] args_updatedb = new String[3];
 		args_updatedb[0] = crawldbPath.toString();
-		args_updatedb[1] = segPath.toString();
+		args_updatedb[1] = "-dir";
+		args_updatedb[2] = segPath.toString();
 
 		String[] args_invertLinks = new String[3];
 		args_invertLinks[0] = linkdbPath.toString();
