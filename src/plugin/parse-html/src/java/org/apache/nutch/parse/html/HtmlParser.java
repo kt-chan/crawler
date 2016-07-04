@@ -27,16 +27,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.io.Text;
 import org.apache.html.dom.HTMLDocumentImpl;
-import org.apache.nutch.TestUtil.TestWriterUtil;
 import org.apache.nutch.metadata.Metadata;
 import org.apache.nutch.metadata.Nutch;
 import org.apache.nutch.parse.HTMLMetaTags;
@@ -44,7 +40,6 @@ import org.apache.nutch.parse.HtmlParseFilters;
 import org.apache.nutch.parse.Outlink;
 import org.apache.nutch.parse.Parse;
 import org.apache.nutch.parse.ParseData;
-import org.apache.nutch.parse.ParseImpl;
 import org.apache.nutch.parse.ParseResult;
 import org.apache.nutch.parse.ParseStatus;
 import org.apache.nutch.parse.Parser;
@@ -59,6 +54,9 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.DocumentFragment;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.iteasoft.crawler.parse.ParseImplExt;
+import com.iteasoft.crawler.util.DebugWriterUtil;
 
 public class HtmlParser implements Parser {
 	public static final Logger LOG = LoggerFactory.getLogger("org.apache.nutch.parse.html");
@@ -233,7 +231,7 @@ public class HtmlParser implements Parser {
 					new String[] { metaTags.getRefreshHref().toString(), Integer.toString(metaTags.getRefreshTime()) });
 		}
 		ParseData parseData = new ParseData(status, title, outlinks, content.getMetadata(), metadata);
-		ParseResult parseResult = ParseResult.createParseResult(content.getUrl(), new ParseImpl(text, parseData));
+		ParseResult parseResult = ParseResult.createParseResult(content.getUrl(), new ParseImplExt(text, parseData));
 
 		// run filters on parse
 		ParseResult filteredParse = this.htmlParseFilters.filter(content, parseResult, metaTags, root);
@@ -282,9 +280,8 @@ public class HtmlParser implements Parser {
 			parser.setFeature("http://cyberneko.org/html/features/scanner/ignore-specified-charset", true);
 			parser.setFeature("http://cyberneko.org/html/features/balance-tags/ignore-outside-content", false);
 			parser.setFeature("http://cyberneko.org/html/features/balance-tags/document-fragment", true);
-			// @Test
-			// parser.setFeature("http://cyberneko.org/html/features/report-errors",
-			// LOG.isTraceEnabled());
+			// @@Test
+			// parser.setFeature("http://cyberneko.org/html/features/report-errors", LOG.isTraceEnabled());
 			parser.setFeature("http://cyberneko.org/html/features/report-errors", true);
 		} catch (SAXException e) {
 			e.printStackTrace();
@@ -296,8 +293,7 @@ public class HtmlParser implements Parser {
 		 int n = inputbyes.available();
 		 byte[] bytes = new byte[n];
 		 inputbyes.read(bytes, 0, n);
-		 TestWriterUtil.write(new String(bytes, StandardCharsets.UTF_8),
-		 "./debug.txt");
+		 DebugWriterUtil.write(new String(bytes, StandardCharsets.UTF_8), "./debug.txt");
 
 		// convert Document to DocumentFragment
 		HTMLDocumentImpl doc = new HTMLDocumentImpl();

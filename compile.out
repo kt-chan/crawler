@@ -1,0 +1,549 @@
+Buildfile: C:\Users\KT\workspace\crawler\build.xml
+Trying to override old definition of task javac
+  [taskdef] Could not load definitions from resource org/sonar/ant/antlib.xml. It could not be found.
+
+clean-build:
+   [delete] Deleting directory C:\Users\KT\workspace\crawler\build
+
+clean-default-lib:
+
+clean-test-lib:
+
+clean-lib:
+
+clean-dist:
+
+clean-eclipse:
+
+ivy-probe-antlib:
+
+ivy-download:
+  [taskdef] Could not load definitions from resource org/sonar/ant/antlib.xml. It could not be found.
+
+ivy-download-unchecked:
+
+ivy-init-antlib:
+
+ivy-init:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\release
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\test\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\test\lib
+
+resolve-test:
+[ivy:resolve] :: Ivy 2.2.0 - 20100923230623 :: http://ant.apache.org/ivy/ ::
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+  [taskdef] Could not load definitions from resource org/sonar/ant/antlib.xml. It could not be found.
+
+copy-libs:
+
+resolve-default:
+  [taskdef] Could not load definitions from resource org/sonar/ant/antlib.xml. It could not be found.
+
+copy-libs:
+
+compile-core:
+    [javac] Compiling 276 source files to C:\Users\KT\workspace\crawler\build\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] C:\Users\KT\workspace\crawler\src\java\org\apache\nutch\hostdb\ReadHostDb.java:174: warning: [deprecation] Job(Configuration,String) in Job has been deprecated
+    [javac]     Job job = new Job(conf, "ReadHostDb");
+    [javac]               ^
+    [javac] Note: Some input files use unchecked or unsafe operations.
+    [javac] Note: Recompile with -Xlint:unchecked for details.
+    [javac] 2 warnings
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\net\protocols\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\net\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\scoring\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\protocol\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\segment\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\tools\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\tools\arc\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\util\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\scoring\webgraph\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\parse\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\classes\org\apache\nutch\tools\warc\package-info.class
+     [copy] Copying 19 files to C:\Users\KT\workspace\crawler\build\classes
+
+compile-plugins:
+
+deploy:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\creativecommons
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\creativecommons\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\creativecommons\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\creativecommons\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\creativecommons
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: creativecommons
+    [javac] Compiling 2 source files to C:\Users\KT\workspace\crawler\build\creativecommons\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\creativecommons\creativecommons.jar
+
+deps-test:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\nutch-extensionpoints
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\nutch-extensionpoints\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\nutch-extensionpoints\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\nutch-extensionpoints\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\nutch-extensionpoints
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+      [jar] Building MANIFEST-only jar: C:\Users\KT\workspace\crawler\build\nutch-extensionpoints\nutch-extensionpoints.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\nutch-extensionpoints
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\nutch-extensionpoints
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\creativecommons
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\creativecommons
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\feed\test\data
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\feed\test\data
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\feed\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\feed\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\feed
+
+init-plugin:
+
+deps-jar:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-xml
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-xml\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-xml\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-xml\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\lib-xml
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+      [jar] Building MANIFEST-only jar: C:\Users\KT\workspace\crawler\build\lib-xml\lib-xml.jar
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: feed
+    [javac] Compiling 4 source files to C:\Users\KT\workspace\crawler\build\feed\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\feed\classes\org\apache\nutch\parse\feed\package-info.class
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\feed\classes\org\apache\nutch\indexer\feed\package-info.class
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\feed\feed.jar
+
+deps-test:
+
+init:
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+
+deps-test:
+
+deploy:
+
+copy-generated-lib:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\protocol-file\test\data
+     [copy] Copying 2 files to C:\Users\KT\workspace\crawler\build\protocol-file\test\data
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\protocol-file\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\protocol-file\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\protocol-file
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: protocol-file
+    [javac] Compiling 4 source files to C:\Users\KT\workspace\crawler\build\protocol-file\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\protocol-file\protocol-file.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\protocol-file
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\protocol-file
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\feed
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\feed
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\headings
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\headings\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\headings\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\headings\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\headings
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: headings
+    [javac] Compiling 2 source files to C:\Users\KT\workspace\crawler\build\headings\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\headings\classes\org\apache\nutch\parse\headings\package-info.class
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\headings\headings.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\headings
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\headings
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-basic
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-basic\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-basic\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-basic\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\index-basic
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: index-basic
+    [javac] Compiling 1 source file to C:\Users\KT\workspace\crawler\build\index-basic\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\index-basic\index-basic.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-basic
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-basic
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-anchor
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-anchor\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-anchor\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-anchor\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\index-anchor
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: index-anchor
+    [javac] Compiling 1 source file to C:\Users\KT\workspace\crawler\build\index-anchor\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\index-anchor\index-anchor.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-anchor
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-anchor
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-geoip
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-geoip\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-geoip\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-geoip\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\index-geoip
+
+init-plugin:
+     [echo] Copying MaxMind GeoIP .mmdb files to build
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: index-geoip
+    [javac] Compiling 3 source files to C:\Users\KT\workspace\crawler\build\index-geoip\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] C:\Users\KT\workspace\crawler\src\plugin\index-geoip\src\java\org\apache\nutch\indexer\geoip\GeoIPDocumentCreator.java:114: warning: [deprecation] isAnonymousProxy() in Traits has been deprecated
+    [javac]     doc.add("isAnonProxy", traits.isAnonymousProxy());
+    [javac]                                  ^
+    [javac] C:\Users\KT\workspace\crawler\src\plugin\index-geoip\src\java\org\apache\nutch\indexer\geoip\GeoIPDocumentCreator.java:115: warning: [deprecation] isSatelliteProvider() in Traits has been deprecated
+    [javac]     doc.add("isSatelliteProv", traits.isSatelliteProvider());
+    [javac]                                      ^
+    [javac] 3 warnings
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\index-geoip\classes\org\apache\nutch\indexer\geoip\package-info.class
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\index-geoip\index-geoip.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-geoip
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-geoip
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-more
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-more\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-more\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-more\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\index-more
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: index-more
+    [javac] Compiling 1 source file to C:\Users\KT\workspace\crawler\build\index-more\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\index-more\index-more.jar
+
+deps-test:
+
+deploy:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-more
+
+copy-generated-lib:
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\plugins\index-more
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-replace\test\data
+     [copy] Copying 1 file to C:\Users\KT\workspace\crawler\build\index-replace\test\data
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-replace\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\index-replace\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\index-replace
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: index-replace
+    [javac] Compiling 3 source files to C:\Users\KT\workspace\crawler\build\index-replace\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] 1 warning
+    [javac] Creating empty C:\Users\KT\workspace\crawler\build\index-replace\classes\org\apache\nutch\indexer\replace\package-info.class
+
+jar:
+      [jar] Building jar: C:\Users\KT\workspace\crawler\build\index-replace\index-replace.jar
+
+deps-test:
+
+init:
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+
+deps-test:
+
+deploy:
+
+copy-generated-lib:
+
+init:
+
+init-plugin:
+
+deps-jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: protocol-file
+
+jar:
+
+deps-test:
+
+deploy:
+
+copy-generated-lib:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\parse-html
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\parse-html\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\parse-html\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\parse-html\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\parse-html
+
+init-plugin:
+
+deps-jar:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-nekohtml
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-nekohtml\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-nekohtml\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-nekohtml\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\lib-nekohtml
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+
+init:
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-jsoup
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-jsoup\classes
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-jsoup\test
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\lib-jsoup\test\lib
+    [mkdir] Created dir: C:\Users\KT\workspace\crawler\build\plugins\lib-jsoup
+
+init-plugin:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+
+jar:
+
+clean-lib:
+
+resolve-default:
+[ivy:resolve] :: loading settings :: file = C:\Users\KT\workspace\crawler\ivy\ivysettings.xml
+
+compile:
+     [echo] Compiling plugin: parse-html
+    [javac] Compiling 6 source files to C:\Users\KT\workspace\crawler\build\parse-html\classes
+    [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+    [javac] C:\Users\KT\workspace\crawler\src\plugin\parse-html\src\java\org\apache\nutch\parse\html\HtmlParser.java:59: error: package com.iteasoft.crawler.general does not exist
+    [javac] import com.iteasoft.crawler.general.TestWriterUtil;
+    [javac]                                    ^
+    [javac] C:\Users\KT\workspace\crawler\src\plugin\parse-html\src\java\org\apache\nutch\parse\html\HtmlParser.java:296: error: cannot find symbol
+    [javac] 		 TestWriterUtil.write(new String(bytes, StandardCharsets.UTF_8), "./debug.txt");
+    [javac] 		 ^
+    [javac]   symbol:   variable TestWriterUtil
+    [javac]   location: class HtmlParser
+    [javac] 2 errors
+    [javac] 1 warning

@@ -18,7 +18,7 @@
 -->
 
 <ivy-module version="1.0">
-  <info organisation="com.iteasoft" module="${ant.project.name}">
+  <info organisation="com.iteasoft.crawler" module="${ant.project.name}">
     <license name="Apache 2.0"/>
     <ivyauthor name="iteasoft" url="http://www.iteasoft.com"/>
     <description>

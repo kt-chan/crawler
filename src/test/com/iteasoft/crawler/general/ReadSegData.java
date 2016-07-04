@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.nutch.general;
+package com.iteasoft.crawler.general;
 
 import java.io.IOException;
 import java.util.HashMap;

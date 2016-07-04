@@ -5,5 +5,5 @@
 # the entire HTML tree. If source is text, the regex is applied to the
 # extracted text.
 #
-# format: <name>\t<source>\t<regex>\n
-div-content	html	data-lineid
+# format: <element>\t<attribute>\t<attribute_value>\n
+li	data-lineid	*

@@ -14,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.iteasoft.parsefilter.jsoup;
-
-import java.net.MalformedURLException;
+package com.iteasoft.crawler.parsefilter.jsoup;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.nutch.metadata.Metadata;
@@ -26,6 +24,7 @@ import org.apache.nutch.parse.ParseImpl;
 import org.apache.nutch.parse.ParseResult;
 import org.apache.nutch.protocol.Content;
 import org.apache.nutch.util.NutchConfiguration;
+
 import junit.framework.TestCase;
 
 public class TestJsoupParseFilter extends TestCase {

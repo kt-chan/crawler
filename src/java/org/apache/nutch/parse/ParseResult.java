@@ -67,8 +67,7 @@ public class ParseResult implements Iterable<Map.Entry<Text, Parse>> {
    */
   public static ParseResult createParseResult(String url, Parse parse) {
     ParseResult parseResult = new ParseResult(url);
-    parseResult.put(new Text(url), new ParseText(parse.getText()),
-        parse.getData());
+    parseResult.put(new Text(url), new ParseText(parse.getText()), parse.getData());
     return parseResult;
   }
 

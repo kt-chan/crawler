@@ -19,5 +19,5 @@
  * RegexParseFilter. If a regular expression matches either HTML or 
  * extracted text, a configurable field is set to true.
  */
-package com.iteasoft.parsefilter.jsoup;
+package com.iteasoft.crawler.parsefilter.jsoup;
 

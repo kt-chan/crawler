@@ -19,7 +19,7 @@
    id="parsefilter-jsoup"
    name="Jsoup Parse Filter"
    version="1.0.0"
-   provider-name="iteasoft.com">
+   provider-name="crawler.iteasoft.com">
 
    <runtime>
       <library name="parsefilter-jsoup.jar">
@@ -31,10 +31,10 @@
       <import plugin="nutch-extensionpoints"/>
    </requires>
 
-   <extension id="com.iteasoft.parsefilter.jsoup"
+   <extension id="com.iteasoft.crawler.parsefilter.jsoup"
         name="Jsoup Parser Filter" point="org.apache.nutch.parse.HtmlParseFilter">
       <implementation id="JsoupParseFilter" 
-                      class="com.iteasoft.parsefilter.jsoup.JsoupParseFilter">
+                      class="com.iteasoft.crawler.parsefilter.jsoup.JsoupParseFilter">
           <parameter name="file" value="jsoup-parsefilter.txt"/>
       </implementation>
    </extension>

@@ -1,4 +1,4 @@
-package org.apache.nutch.TestUtil;
+package com.iteasoft.crawler.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import org.apache.nutch.protocol.Content;
 
 
-public abstract class TestWriterUtil {
+public abstract class DebugWriterUtil {
 
 	private static BufferedWriter out = null;
 	
