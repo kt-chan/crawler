@@ -27,7 +27,7 @@
   </info>
 
   <configurations>
-    <include file="../../../ivy/ivy-configurations.xml"/>
+    <include file="../../..//ivy/ivy-configurations.xml"/>
   </configurations>
 
   <publications>
@@ -36,10 +36,7 @@
   </publications>
 
   <dependencies>
-	   <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2.1"/>
+	   <dependency org="org.jsoup" name="jsoup" rev="1.9.2" conf="*->master"/>
   </dependencies>
   
-  
-  
-
 </ivy-module>

@@ -39,13 +39,33 @@
 	</property>
 	
 	<property>
+	  <name>http.content.limit</name>
+	  <value>-1</value>
+	</property>
+	
+	<property>
 		<name>hadoop.tmp.dir</name>
 		<value>tmp</value>
+	</property>
+
+	<property>
+	  <name>parser.html.impl</name>
+	  <value>jsoup</value>
+	  <description>HTML Parser implementation. Currently the following keywords
+	  are recognized: "neko" uses NekoHTML, "tagsoup" uses TagSoup.
+	  </description>
+	</property>
+
+	<property>
+	  <name>parser.character.encoding.default</name>
+	  <value>UTF-8</value>
+	  <description>The character encoding to fall back to when no other information
+	  is available</description>
 	</property>
 	
 	<property>
 	  <name>plugin.includes</name>
-	  <value>protocol-http|urlfilter-regex|parse-(html|tika)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)</value>
+	  <value>protocol-http|urlfilter-regex|parse-(html|tika|jsoup)|parsefilter-jsoup|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)</value>
 	  <description>Regular expression naming plugin directory names to
 	  include.  Any plugin not matching this expression is excluded.
 	  In any case you need at least include the nutch-extensionpoints plugin. By

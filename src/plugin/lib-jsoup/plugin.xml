@@ -15,35 +15,24 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+<!--
+ ! NekoHTML is a simple HTML scanner and tag balancer that enables 
+ ! application programmers to parse HTML documents and access the 
+ ! information using standard XML interfaces.
+ ! (http://sourceforge.net/projects/nekohtml/)
+ ! 
+ ! License : https://nekohtml.svn.sourceforge.net/svnroot/nekohtml/trunk/LICENSE.txt
+ !-->
 <plugin
-   id="parse-html"
-   name="Html Parse Plug-in"
-   version="1.0.0"
-   provider-name="nutch.org">
+   id="lib-jsoup"
+   name="Jsoup HTML Parser"
+   version="1.9.2"
+   provider-name="org.jsoup">
 
    <runtime>
-      <library name="parse-html.jar">
-         <export name="*"/>
-      </library>
-      <library name="tagsoup-1.2.1.jar"/>
+     <library name="jsoup-1.9.2.jar">
+        <export name="*"/>
+     </library>
    </runtime>
-
-   <requires>
-      <import plugin="nutch-extensionpoints"/>
-      <import plugin="lib-nekohtml"/>
-      <import plugin="lib-jsoup"/>
-   </requires>
-
-   <extension id="org.apache.nutch.parse.html"
-              name="HtmlParse"
-              point="org.apache.nutch.parse.Parser">
-
-      <implementation id="org.apache.nutch.parse.html.HtmlParser"
-                      class="org.apache.nutch.parse.html.HtmlParser">
-        <parameter name="contentType" value="text/html|application/xhtml+xml"/>
-        <parameter name="pathSuffix" value=""/>
-      </implementation>
-
-   </extension>
 
 </plugin>

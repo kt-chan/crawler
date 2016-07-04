@@ -45,6 +45,7 @@
      <ant dir="language-identifier" target="deploy"/>
      <ant dir="lib-http" target="deploy"/>
      <ant dir="lib-nekohtml" target="deploy"/>
+  	 <ant dir="lib-jsoup" target="deploy"/>
      <ant dir="lib-regex-filter" target="deploy"/>
      <ant dir="lib-xml" target="deploy"/>
      <ant dir="microformats-reltag" target="deploy"/>
@@ -105,6 +106,7 @@
      <ant dir="mimetype-filter" target="test"/>
      <ant dir="language-identifier" target="test"/>
      <ant dir="lib-http" target="test"/>
+     <ant dir="lib-jsoup" target="test"/>
      <ant dir="protocol-file" target="test"/>
      <ant dir="protocol-http" target="test"/>
      <ant dir="protocol-httpclient" target="test"/>
@@ -160,6 +162,7 @@
     <ant dir="lib-http" target="clean"/>
     <!-- <ant dir="lib-lucene-analyzers" target="clean"/>-->
     <ant dir="lib-nekohtml" target="clean"/>
+  	<ant dir="lib-jsoup" target="clean"/>
     <ant dir="lib-regex-filter" target="clean"/>
     <ant dir="lib-xml" target="clean"/>
     <ant dir="microformats-reltag" target="clean"/>

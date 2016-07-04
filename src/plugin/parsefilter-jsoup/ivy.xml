@@ -18,28 +18,20 @@
 -->
 
 <ivy-module version="1.0">
-  <info organisation="org.apache.nutch" module="${ant.project.name}">
+  <info organisation="com.iteasoft" module="${ant.project.name}">
     <license name="Apache 2.0"/>
-    <ivyauthor name="Apache Nutch Team" url="http://nutch.apache.org"/>
+    <ivyauthor name="iteasoft" url="http://www.iteasoft.com"/>
     <description>
-        Apache Nutch
+        iteasoft
     </description>
   </info>
 
   <configurations>
-    <include file="../../../ivy/ivy-configurations.xml"/>
+    <include file="../../..//ivy/ivy-configurations.xml"/>
   </configurations>
 
   <publications>
     <!--get the artifact from our module name-->
     <artifact conf="master"/>
-  </publications>
-
-  <dependencies>
-	   <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2.1"/>
-  </dependencies>
-  
-  
-  
-
+  </publications>  
 </ivy-module>

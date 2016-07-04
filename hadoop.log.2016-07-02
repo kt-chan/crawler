@@ -1,0 +1,4 @@
+2016-07-02 22:44:56,281 INFO  segment.SegmentReader - SegmentReader: dump segment: test/segments/20160702172744
+2016-07-02 22:44:56,492 WARN  mapreduce.JobResourceUploader - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+2016-07-02 22:44:56,554 WARN  mapreduce.JobResourceUploader - No job jar file set.  User classes may not be found. See Job or Job#setJar(String).
+2016-07-02 22:45:00,911 INFO  segment.SegmentReader - SegmentReader: done

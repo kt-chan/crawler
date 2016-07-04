@@ -16,34 +16,27 @@
  limitations under the License.
 -->
 <plugin
-   id="parse-html"
-   name="Html Parse Plug-in"
+   id="parsefilter-jsoup"
+   name="Jsoup Parse Filter"
    version="1.0.0"
-   provider-name="nutch.org">
+   provider-name="iteasoft.com">
 
    <runtime>
-      <library name="parse-html.jar">
+      <library name="parsefilter-jsoup.jar">
          <export name="*"/>
       </library>
-      <library name="tagsoup-1.2.1.jar"/>
    </runtime>
 
    <requires>
       <import plugin="nutch-extensionpoints"/>
-      <import plugin="lib-nekohtml"/>
-      <import plugin="lib-jsoup"/>
    </requires>
 
-   <extension id="org.apache.nutch.parse.html"
-              name="HtmlParse"
-              point="org.apache.nutch.parse.Parser">
-
-      <implementation id="org.apache.nutch.parse.html.HtmlParser"
-                      class="org.apache.nutch.parse.html.HtmlParser">
-        <parameter name="contentType" value="text/html|application/xhtml+xml"/>
-        <parameter name="pathSuffix" value=""/>
+   <extension id="com.iteasoft.parsefilter.jsoup"
+        name="Jsoup Parser Filter" point="org.apache.nutch.parse.HtmlParseFilter">
+      <implementation id="JsoupParseFilter" 
+                      class="com.iteasoft.parsefilter.jsoup.JsoupParseFilter">
+          <parameter name="file" value="jsoup-parsefilter.txt"/>
       </implementation>
-
    </extension>
 
 </plugin>

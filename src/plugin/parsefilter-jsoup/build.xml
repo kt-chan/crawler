@@ -15,29 +15,13 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="parse-html" default="jar-core">
+<project name="parsefilter-jsoup" default="jar-core">
 
   <import file="../build-plugin.xml"/>
 
-  <!-- Build compilation dependencies -->
-  <target name="deps-jar">
-    <ant target="jar" inheritall="false" dir="../lib-nekohtml"/>
-  	<ant target="jar" inheritall="false" dir="../lib-jsoup"/>
-  </target>
-
-  <!-- Add compilation dependencies to classpath -->
-  <path id="plugin.deps">
-    <fileset dir="${nutch.root}/build">
-      <include name="**/lib-nekohtml/*.jar" />
-      <include name="**/lib-jsoup/*.jar" />
-    </fileset>
-  </path>
-
-  <!-- Deploy Unit test dependencies -->
-  <target name="deps-test">
-    <ant target="deploy" inheritall="false" dir="../lib-nekohtml"/>
-  	<ant target="deploy" inheritall="false" dir="../lib-jsoup"/>
-    <ant target="deploy" inheritall="false" dir="../nutch-extensionpoints"/>
-  </target>
-
+  <!-- for junit test -->
+  <mkdir dir="${build.test}/data"/>
+  <copy todir="${build.test}/data">
+    <fileset dir="data" />
+  </copy>
 </project>

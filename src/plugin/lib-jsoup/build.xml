@@ -15,29 +15,16 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="parse-html" default="jar-core">
+<project name="lib-jsoup" default="jar">
 
   <import file="../build-plugin.xml"/>
 
-  <!-- Build compilation dependencies -->
-  <target name="deps-jar">
-    <ant target="jar" inheritall="false" dir="../lib-nekohtml"/>
-  	<ant target="jar" inheritall="false" dir="../lib-jsoup"/>
-  </target>
+  <!--
+   ! Override the compile and jar targets,
+   ! since there is nothing to compile here.
+   ! -->
+  <target name="compile" depends="init, resolve-default"/>
 
-  <!-- Add compilation dependencies to classpath -->
-  <path id="plugin.deps">
-    <fileset dir="${nutch.root}/build">
-      <include name="**/lib-nekohtml/*.jar" />
-      <include name="**/lib-jsoup/*.jar" />
-    </fileset>
-  </path>
-
-  <!-- Deploy Unit test dependencies -->
-  <target name="deps-test">
-    <ant target="deploy" inheritall="false" dir="../lib-nekohtml"/>
-  	<ant target="deploy" inheritall="false" dir="../lib-jsoup"/>
-    <ant target="deploy" inheritall="false" dir="../nutch-extensionpoints"/>
-  </target>
+  <target name="jar" depends="compile"/>
 
 </project>

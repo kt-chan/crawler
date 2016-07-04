@@ -6,4 +6,5 @@
 # extracted text.
 #
 # format: <name>\t<source>\t<regex>\n
-div-content	html	data-lineid
+first	html	h1
+second	text	blablabla

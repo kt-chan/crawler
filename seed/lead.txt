@@ -1,2 +1,1 @@
-http://wiki.apache.org/nutch/
-http://hadoop.apache.org/
+http://gny.ly.com/
