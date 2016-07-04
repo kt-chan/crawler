@@ -22,9 +22,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.hadoop.io.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.hadoop.io.Text;
 
 /**
  * A utility class that stores result of a parse. Internally a ParseResult
@@ -40,7 +40,7 @@ import org.apache.hadoop.io.Text;
  */
 public class ParseResult implements Iterable<Map.Entry<Text, Parse>> {
   private Map<Text, Parse> parseMap;
-  private String originalUrl;
+  protected String originalUrl;
 
   public static final Logger LOG = LoggerFactory.getLogger(ParseResult.class);
 

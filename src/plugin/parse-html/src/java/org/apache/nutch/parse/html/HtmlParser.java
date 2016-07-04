@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,7 +78,7 @@ public class HtmlParser implements Parser {
 
 	private String parserImpl;
 	private URL baseUrl;
-	
+
 	/**
 	 * Given a <code>byte[]</code> representing an html file of an
 	 * <em>unknown</em> encoding, read out 'charset' parameter in the meta tag
@@ -148,13 +149,13 @@ public class HtmlParser implements Parser {
 	public ParseResult getParse(Content content) {
 		HTMLMetaTags metaTags = new HTMLMetaTags();
 
-		
 		try {
 			baseUrl = new URL(content.getBaseUrl());
 		} catch (MalformedURLException e) {
 			return new ParseStatus(e).getEmptyParseResult(content.getUrl(), getConf());
 		}
 
+		Map<String, String> fields = new HashMap<String, String>();
 		String text = "";
 		String title = "";
 		Outlink[] outlinks = new Outlink[0];
@@ -223,6 +224,8 @@ public class HtmlParser implements Parser {
 				LOG.trace("found " + outlinks.length + " outlinks in " + content.getUrl());
 			}
 		}
+		
+		//extract selected fields from html content
 
 		ParseStatus status = new ParseStatus(ParseStatus.SUCCESS);
 		if (metaTags.getRefresh()) {
@@ -244,8 +247,8 @@ public class HtmlParser implements Parser {
 	}
 
 	private DocumentFragment parse(InputSource input) throws Exception {
-		
-		if(parserImpl.equalsIgnoreCase("jsoup"))
+
+		if (parserImpl.equalsIgnoreCase("jsoup"))
 			return parseJSoup(input);
 		else if (parserImpl.equalsIgnoreCase("tagsoup"))
 			return parseTagSoup(input);
@@ -254,10 +257,11 @@ public class HtmlParser implements Parser {
 	}
 
 	private DocumentFragment parseJSoup(InputSource input) throws Exception {
-		DocumentFragment frag = JsoupDOMBuilder.jsoup2HTML(Jsoup.parse(input.getByteStream(), defaultCharEncoding, baseUrl.getHost())); 
+		DocumentFragment frag = JsoupDOMBuilder
+				.jsoup2HTML(Jsoup.parse(input.getByteStream(), defaultCharEncoding, baseUrl.getHost()));
 		return frag;
 	}
-	
+
 	private DocumentFragment parseTagSoup(InputSource input) throws Exception {
 		HTMLDocumentImpl doc = new HTMLDocumentImpl();
 		DocumentFragment frag = doc.createDocumentFragment();
@@ -281,19 +285,20 @@ public class HtmlParser implements Parser {
 			parser.setFeature("http://cyberneko.org/html/features/balance-tags/ignore-outside-content", false);
 			parser.setFeature("http://cyberneko.org/html/features/balance-tags/document-fragment", true);
 			// @@Test
-			// parser.setFeature("http://cyberneko.org/html/features/report-errors", LOG.isTraceEnabled());
+			// parser.setFeature("http://cyberneko.org/html/features/report-errors",
+			// LOG.isTraceEnabled());
 			parser.setFeature("http://cyberneko.org/html/features/report-errors", true);
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
 
 		// @@Test
-		 InputStream inputbyes = input.getByteStream();
-		 inputbyes.reset();
-		 int n = inputbyes.available();
-		 byte[] bytes = new byte[n];
-		 inputbyes.read(bytes, 0, n);
-		 DebugWriterUtil.write(new String(bytes, StandardCharsets.UTF_8), "./debug.txt");
+		InputStream inputbyes = input.getByteStream();
+		inputbyes.reset();
+		int n = inputbyes.available();
+		byte[] bytes = new byte[n];
+		inputbyes.read(bytes, 0, n);
+		DebugWriterUtil.write(new String(bytes, StandardCharsets.UTF_8), "./debug.txt");
 
 		// convert Document to DocumentFragment
 		HTMLDocumentImpl doc = new HTMLDocumentImpl();
