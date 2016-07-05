@@ -1,4 +1,4 @@
-package com.iteasoft.crawler.util;
+package me.ktchan.crawler.util;
 
 import java.io.BufferedWriter;
 import java.io.File;

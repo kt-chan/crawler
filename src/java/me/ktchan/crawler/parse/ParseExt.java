@@ -1,4 +1,4 @@
-package com.iteasoft.crawler.parse;
+package me.ktchan.crawler.parse;
 
 import org.apache.nutch.parse.Parse;
 

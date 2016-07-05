@@ -56,8 +56,8 @@ import org.w3c.dom.DocumentFragment;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.iteasoft.crawler.parse.ParseImplExt;
-import com.iteasoft.crawler.util.DebugWriterUtil;
+import me.ktchan.crawler.parse.ParseImplExt;
+import me.ktchan.crawler.util.DebugWriterUtil;
 
 public class HtmlParser implements Parser {
 	public static final Logger LOG = LoggerFactory.getLogger("org.apache.nutch.parse.html");
