@@ -41,6 +41,7 @@ import org.apache.nutch.parse.HtmlParseFilters;
 import org.apache.nutch.parse.Outlink;
 import org.apache.nutch.parse.Parse;
 import org.apache.nutch.parse.ParseData;
+import org.apache.nutch.parse.ParseImpl;
 import org.apache.nutch.parse.ParseResult;
 import org.apache.nutch.parse.ParseStatus;
 import org.apache.nutch.parse.Parser;
@@ -56,7 +57,6 @@ import org.w3c.dom.DocumentFragment;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import me.ktchan.crawler.parse.ParseImplExt;
 import me.ktchan.crawler.util.DebugWriterUtil;
 
 public class HtmlParser implements Parser {
@@ -225,8 +225,6 @@ public class HtmlParser implements Parser {
 			}
 		}
 		
-		//extract selected fields from html content
-
 		ParseStatus status = new ParseStatus(ParseStatus.SUCCESS);
 		if (metaTags.getRefresh()) {
 			status.setMinorCode(ParseStatus.SUCCESS_REDIRECT);
@@ -234,7 +232,7 @@ public class HtmlParser implements Parser {
 					new String[] { metaTags.getRefreshHref().toString(), Integer.toString(metaTags.getRefreshTime()) });
 		}
 		ParseData parseData = new ParseData(status, title, outlinks, content.getMetadata(), metadata);
-		ParseResult parseResult = ParseResult.createParseResult(content.getUrl(), new ParseImplExt(text, parseData));
+		ParseResult parseResult = ParseResult.createParseResult(content.getUrl(), new ParseImpl(text, parseData));
 
 		// run filters on parse
 		ParseResult filteredParse = this.htmlParseFilters.filter(content, parseResult, metaTags, root);

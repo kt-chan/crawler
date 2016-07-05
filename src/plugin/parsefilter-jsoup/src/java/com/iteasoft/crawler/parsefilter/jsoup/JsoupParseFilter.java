@@ -24,6 +24,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DocumentFragment;
+
+import me.ktchan.crawler.util.DebugWriterUtil;
 
 /**
  * RegexParseFilter. If a regular expression matches either HTML or extracted
@@ -71,11 +74,25 @@ public class JsoupParseFilter implements HtmlParseFilter {
 			String field = entry.getKey();
 			JsoupRule jsoupRule = entry.getValue();
 
-			if (matches(html, field, jsoupRule.attribute, jsoupRule.regex)) {
-				parse.getData().getParseMeta().set(field, "true");
-			} else {
-				parse.getData().getParseMeta().set(field, "false");
+//			// @@Test
+//			DebugWriterUtil.delete("./test/debug.txt");
+			Map<String, String[]> metadata = new HashMap<String, String[]>();
+			if (matches(html, field, jsoupRule, metadata)) {
+				parse.getData().getFields().putAll(metadata);
 			}
+
+//			// @@Test
+//			for (Entry<String, String[]> e : parse.getData().getFields().entrySet()) {
+//				DebugWriterUtil.write("\n", "./test/debug.txt");
+//				String output = "";
+//				for (String s : e.getValue()) {
+//					if (output.trim().isEmpty())
+//						output = s;
+//					else
+//						output = output + "," + s;
+//				}
+//				DebugWriterUtil.write(e.getKey() + "::" + output, "./test/debug.txt");
+//			}
 		}
 
 		return parseResult;
@@ -139,26 +156,60 @@ public class JsoupParseFilter implements HtmlParseFilter {
 		return this.conf;
 	}
 
-	private boolean matches(String html, String field, String attribute, Pattern pattern) {
+	private boolean matches(String html, String field, JsoupRule jsoupRule, Map<String, String[]> metadata) {
+
+		boolean matched = false;
+		String attribute = jsoupRule.attribute;
+		Pattern pattern = jsoupRule.regex;
+
 		if (html != null && attribute != null) {
+
 			org.jsoup.nodes.Document jDoc = Jsoup.parse(html);
-			Elements jElements = jDoc.select("li");
+			Elements jElements = jDoc.select(field);
+
 			for (org.jsoup.nodes.Element e1 : jElements) {
-				if (e1.getAllElements() != null && e1.getAllElements().size() != 0) {
-					for (org.jsoup.nodes.Element e2 : e1.getAllElements()) {
-						matches(e2.html(), field, attribute, pattern);
-					}
-				}
-				
+
 				String content = e1.attr(attribute);
+
 				if (content != null && content.length() != 0) {
+
 					Matcher matcher = pattern.matcher(content);
-				    return matcher.find();
+
+					if (matcher.find()) {
+
+						// @@Test Extract selected metatag
+						String[] outputs = new String[jsoupRule.selectorPairs.length];
+
+						int i = 0;
+						for (String selectorPair : jsoupRule.selectorPairs) {
+
+							String[] selectorAttr = selectorPair.split(":");
+							Elements selected = e1.select(selectorAttr[0]);
+							if (selected.size() > 0) {
+								String key = selectorAttr[0].replaceAll("\\[", "").replaceAll("\\]", "")
+										.replaceAll("\\.", "");
+
+								if (selectorAttr[1].equals("*") && !selected.text().trim().isEmpty()) {
+									outputs[i] = key + ":" + selected.text();
+								}
+
+								if (!selectorAttr[1].equals("*") && !selected.attr(selectorAttr[1]).trim().isEmpty()) {
+									outputs[i] = key + ":" + selected.attr(selectorAttr[1]);
+								}
+
+							}
+
+							i++;
+						}
+
+						metadata.put(content, outputs);
+						matched = true;
+					}
 				}
 			}
 		}
 
-		return false;
+		return matched;
 	}
 
 	private synchronized void readConfiguration(Reader configReader) throws IOException {
@@ -176,22 +227,25 @@ public class JsoupParseFilter implements HtmlParseFilter {
 				String field = parts[0].trim();
 				String source = parts[1].trim();
 				String regex = parts[2].trim();
+				String[] selectors = parts[3].trim().split(",");
 
-				rules.put(field, new JsoupRule(source, regex));
+				rules.put(field, new JsoupRule(source, regex, selectors));
 			}
 		}
 	}
 
 	private static class JsoupRule {
-		public JsoupRule(String attribute, String regex) {
+		public JsoupRule(String attribute, String regex, String[] selectorPairs) {
 
 			if (regex.equals("*"))
 				regex = "\\S";
 			this.attribute = attribute;
 			this.regex = Pattern.compile(regex);
+			this.selectorPairs = selectorPairs;
 		}
 
 		public String attribute;
 		public Pattern regex;
+		public String[] selectorPairs;
 	}
 }

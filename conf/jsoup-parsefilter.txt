@@ -5,5 +5,5 @@
 # the entire HTML tree. If source is text, the regex is applied to the
 # extracted text.
 #
-# format: <element>\t<attribute>\t<attribute_value>\n
-li	data-lineid	*
+# format: <baseurl>\t<element>\t<attribute>\t<attribute_value>\t<selector1:attribute,selector2:attribute...>\n
+li	data-lineid	*	[href]:href,[title]:title,.livecity:*,.dest:*,.money:*
