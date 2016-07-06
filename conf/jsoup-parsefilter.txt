@@ -6,4 +6,4 @@
 # extracted text.
 #
 # format: <baseurl>\t<element>\t<attribute>\t<attribute_value>\t<selector1:attribute,selector2:attribute...>\n
-li	data-lineid	*	[href]:href,[title]:title,.livecity:*,.dest:*,.money:*
+ly.com	li	data-lineid	*	[href]:href,[title]:title,.livecity:*,.dest:*,.money:*

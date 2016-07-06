@@ -42,6 +42,7 @@
                       class="org.apache.nutch.parse.html.HtmlParser">
         <parameter name="contentType" value="text/html|application/xhtml+xml"/>
         <parameter name="pathSuffix" value=""/>
+        <parameter name="file" value="jsoup-parsefilter.txt"/>
       </implementation>
 
    </extension>

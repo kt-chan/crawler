@@ -17,21 +17,26 @@
 
 package org.apache.nutch.parse.html;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.html.dom.HTMLDocumentImpl;
 import org.apache.nutch.metadata.Metadata;
@@ -45,11 +50,14 @@ import org.apache.nutch.parse.ParseImpl;
 import org.apache.nutch.parse.ParseResult;
 import org.apache.nutch.parse.ParseStatus;
 import org.apache.nutch.parse.Parser;
+import org.apache.nutch.plugin.Extension;
+import org.apache.nutch.plugin.PluginRepository;
 import org.apache.nutch.protocol.Content;
 import org.apache.nutch.util.EncodingDetector;
 import org.apache.nutch.util.NutchConfiguration;
 import org.cyberneko.html.parsers.DOMFragmentParser;
 import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
@@ -78,6 +86,20 @@ public class HtmlParser implements Parser {
 
 	private String parserImpl;
 	private URL baseUrl;
+
+	private String defaultCharEncoding;
+
+	private Configuration conf;
+
+	private DOMContentUtils utils;
+
+	private HtmlParseFilters htmlParseFilters;
+
+	private String cachingPolicy;
+
+	private static String attributeFile = null;
+
+	private static final Map<String, List<JsoupRule>> rules = new HashMap<String, List<JsoupRule>>();
 
 	/**
 	 * Given a <code>byte[]</code> representing an html file of an
@@ -136,16 +158,6 @@ public class HtmlParser implements Parser {
 		return encoding;
 	}
 
-	private String defaultCharEncoding;
-
-	private Configuration conf;
-
-	private DOMContentUtils utils;
-
-	private HtmlParseFilters htmlParseFilters;
-
-	private String cachingPolicy;
-
 	public ParseResult getParse(Content content) {
 		HTMLMetaTags metaTags = new HTMLMetaTags();
 
@@ -155,7 +167,6 @@ public class HtmlParser implements Parser {
 			return new ParseStatus(e).getEmptyParseResult(content.getUrl(), getConf());
 		}
 
-		Map<String, String> fields = new HashMap<String, String>();
 		String text = "";
 		String title = "";
 		Outlink[] outlinks = new Outlink[0];
@@ -224,7 +235,7 @@ public class HtmlParser implements Parser {
 				LOG.trace("found " + outlinks.length + " outlinks in " + content.getUrl());
 			}
 		}
-		
+
 		ParseStatus status = new ParseStatus(ParseStatus.SUCCESS);
 		if (metaTags.getRefresh()) {
 			status.setMinorCode(ParseStatus.SUCCESS_REDIRECT);
@@ -233,6 +244,25 @@ public class HtmlParser implements Parser {
 		}
 		ParseData parseData = new ParseData(status, title, outlinks, content.getMetadata(), metadata);
 		ParseResult parseResult = ParseResult.createParseResult(content.getUrl(), new ParseImpl(text, parseData));
+
+		// Parse tagFields metadata
+		Parse parse = parseResult.get(content.getUrl());
+		String html = new String(content.getContent());
+
+		for (Map.Entry<String, List<JsoupRule>> entry : rules.entrySet()) {
+			String domain = entry.getKey();
+			String baseUrl = content.getBaseUrl();
+			if (baseUrl.contains(domain)) {
+				List<JsoupRule> jsoupRules = entry.getValue();
+				for (JsoupRule jsoupRule : jsoupRules) {
+					if (matches(html, jsoupRule, parse.getData().getTagFieldMeta())) {
+						parse.getData().getParseMeta().add("fieldMeta", "true");
+					} else {
+						parse.getData().getParseMeta().add("fieldMeta", "false");
+					}
+				}
+			}
+		}
 
 		// run filters on parse
 		ParseResult filteredParse = this.htmlParseFilters.filter(content, parseResult, metaTags, root);
@@ -324,6 +354,63 @@ public class HtmlParser implements Parser {
 		return res;
 	}
 
+	private boolean matches(String html, JsoupRule jsoupRule, Metadata fieldMeta) {
+
+		boolean matched = false;
+		String element = jsoupRule.element;
+		String attribute = jsoupRule.attribute;
+		Pattern pattern = jsoupRule.regex;
+
+		if (html != null && attribute != null) {
+
+			org.jsoup.nodes.Document jDoc = Jsoup.parse(html);
+			Elements jElements = jDoc.select(element);
+
+			for (org.jsoup.nodes.Element e1 : jElements) {
+
+				String content = e1.attr(attribute);
+
+				if (content != null && content.length() != 0) {
+
+					Matcher matcher = pattern.matcher(content);
+
+					if (matcher.find()) {
+
+						// @@Test Extract selected metatag
+						String[] outputs = new String[jsoupRule.selectorPairs.length];
+
+						int i = 0;
+						for (String selectorPair : jsoupRule.selectorPairs) {
+
+							String[] selectorAttr = selectorPair.split(":");
+							Elements selected = e1.select(selectorAttr[0]);
+							if (selected.size() > 0) {
+								String key = selectorAttr[0].replaceAll("\\[", "").replaceAll("\\]", "")
+										.replaceAll("\\.", "");
+
+								if (selectorAttr[1].equals("*") && !selected.text().trim().isEmpty()) {
+									outputs[i] = key + ":" + selected.text();
+								}
+
+								if (!selectorAttr[1].equals("*") && !selected.attr(selectorAttr[1]).trim().isEmpty()) {
+									outputs[i] = key + ":" + selected.attr(selectorAttr[1]);
+								}
+
+							}
+
+							i++;
+						}
+
+						fieldMeta.addAll(content, outputs);
+						matched = true;
+					}
+				}
+			}
+		}
+
+		return matched;
+	}
+
 	public static void main(String[] args) throws Exception {
 		// LOG.setLevel(Level.FINE);
 		String name = args[0];
@@ -339,7 +426,7 @@ public class HtmlParser implements Parser {
 		System.out.println("data: " + parse.getData());
 
 		System.out.println("text: " + parse.getText());
-
+		in.close();
 	}
 
 	public void setConf(Configuration conf) {
@@ -349,9 +436,104 @@ public class HtmlParser implements Parser {
 		this.defaultCharEncoding = getConf().get("parser.character.encoding.default", "windows-1252");
 		this.utils = new DOMContentUtils(conf);
 		this.cachingPolicy = getConf().get("parser.caching.forbidden.policy", Nutch.CACHING_FORBIDDEN_CONTENT);
+
+		// get the extensions for domain urlfilter
+		String pluginName = "parse-html";
+		Extension[] extensions = PluginRepository.get(conf).getExtensionPoint(Parser.class.getName())
+				.getExtensions();
+		for (int i = 0; i < extensions.length; i++) {
+			Extension extension = extensions[i];
+			if (extension.getDescriptor().getPluginId().equals(pluginName)) {
+				attributeFile = extension.getAttribute("file");
+				break;
+			}
+		}
+
+		// handle blank non empty input
+		if (attributeFile != null && attributeFile.trim().equals("")) {
+			attributeFile = null;
+		}
+
+		if (attributeFile != null) {
+			if (LOG.isInfoEnabled()) {
+				LOG.info("Attribute \"file\" is defined for plugin " + pluginName + " as " + attributeFile);
+			}
+		} else {
+			if (LOG.isWarnEnabled()) {
+				LOG.warn("Attribute \"file\" is not defined in plugin.xml for plugin " + pluginName);
+			}
+		}
+
+		// domain file and attribute "file" take precedence if defined
+		String file = conf.get("parsefilter.jsoup.file");
+		if (file == null && attributeFile != null) {
+			file = attributeFile;
+		}
+
+		Reader reader = conf.getConfResourceAsReader(file);
+
+		try {
+			if (reader == null) {
+				reader = new FileReader(file);
+			}
+			readConfiguration(reader);
+		} catch (IOException e) {
+			LOG.error(org.apache.hadoop.util.StringUtils.stringifyException(e));
+		}
 	}
 
 	public Configuration getConf() {
 		return this.conf;
+	}
+
+	private synchronized void readConfiguration(Reader configReader) throws IOException {
+		if (rules.size() > 0) {
+			return;
+		}
+
+		String line;
+		BufferedReader reader = new BufferedReader(configReader);
+		while ((line = reader.readLine()) != null) {
+			if (StringUtils.isNotBlank(line) && !line.startsWith("#")) {
+				line = line.trim();
+				String[] parts = line.split("\t");
+
+				String domain = parts[0].trim();
+				String element = parts[1].trim();
+				String source = parts[2].trim();
+				String regex = parts[3].trim();
+				String[] selectors = parts[4].trim().split(",");
+
+				addRules(domain, new JsoupRule(element, source, regex, selectors));
+			}
+		}
+
+	}
+
+	private synchronized void addRules(String domain, JsoupRule jsoupRule) {
+		if (rules.containsKey(domain)) {
+			rules.get(domain).add(jsoupRule);
+		} else {
+			List<JsoupRule> jsoupRules = new ArrayList<JsoupRule>();
+			jsoupRules.add(jsoupRule);
+			rules.put(domain, jsoupRules);
+		}
+	}
+
+	private static class JsoupRule {
+		public JsoupRule(String element, String attribute, String regex, String[] selectorPairs) {
+
+			if (regex.equals("*"))
+				regex = "\\S";
+			this.element = element;
+			this.attribute = attribute;
+			this.regex = Pattern.compile(regex);
+			this.selectorPairs = selectorPairs;
+		}
+
+		public String element;
+		public String attribute;
+		public Pattern regex;
+		public String[] selectorPairs;
 	}
 }
