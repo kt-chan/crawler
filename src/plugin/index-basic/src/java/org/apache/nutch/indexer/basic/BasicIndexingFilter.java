@@ -17,27 +17,24 @@
 
 package org.apache.nutch.indexer.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.nutch.metadata.Nutch;
-import org.apache.nutch.parse.Parse;
-
-import org.apache.nutch.indexer.IndexingFilter;
-import org.apache.nutch.indexer.IndexingException;
-import org.apache.nutch.indexer.NutchDocument;
-import org.apache.nutch.util.StringUtil;
-import org.apache.nutch.util.URLUtil;
-import org.apache.hadoop.io.Text;
-
-import org.apache.nutch.crawl.CrawlDatum;
-import org.apache.nutch.crawl.Inlinks;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Date;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.Text;
+import org.apache.nutch.crawl.CrawlDatum;
+import org.apache.nutch.crawl.Inlinks;
+import org.apache.nutch.indexer.IndexingException;
+import org.apache.nutch.indexer.IndexingFilter;
+import org.apache.nutch.indexer.NutchDocument;
+import org.apache.nutch.metadata.Nutch;
+import org.apache.nutch.parse.Parse;
+import org.apache.nutch.util.StringUtil;
+import org.apache.nutch.util.URLUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Adds basic searchable fields to a document. The fields added are : domain,
@@ -111,6 +108,11 @@ public class BasicIndexingFilter implements IndexingFilter {
       content = content.substring(0, MAX_CONTENT_LENGTH);
     }
     doc.add("content", StringUtil.cleanField(content));
+    
+    //@@Test
+    //fieldMeta
+    Collection<String[]> tagFields = parse.getData().getTagFieldMeta().getAllValues().values();
+    doc.add("tagFields", tagFields);
 
     // title
     String title = parse.getData().getTitle();

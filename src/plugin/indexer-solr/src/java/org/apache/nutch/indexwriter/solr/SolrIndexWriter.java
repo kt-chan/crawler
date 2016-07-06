@@ -155,9 +155,8 @@ public class SolrIndexWriter implements IndexWriter {
         if (e.getKey().equals("content") || e.getKey().equals("title")) {
           val2 = SolrUtils.stripNonCharCodepoints((String) val);
         }
-
-        inputDoc.addField(solrMapping.mapKey(e.getKey()), val2, e.getValue()
-            .getWeight());
+        
+        inputDoc.addField(solrMapping.mapKey(e.getKey()), val2, e.getValue().getWeight());
         String sCopy = solrMapping.mapCopyKey(e.getKey());
         if (sCopy != e.getKey()) {
           inputDoc.addField(sCopy, val);

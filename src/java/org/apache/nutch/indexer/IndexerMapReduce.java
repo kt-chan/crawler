@@ -213,6 +213,7 @@ public class IndexerMapReduce extends Configured implements
       } else if (value instanceof ParseData) {
         parseData = (ParseData) value;
 
+        //@@Test robots filter
         // Handle robots meta? https://issues.apache.org/jira/browse/NUTCH-1434
         if (deleteRobotsNoIndex) {
           // Get the robots meta data
@@ -293,8 +294,7 @@ public class IndexerMapReduce extends Configured implements
     float boost = 1.0f;
     // run scoring filters
     try {
-      boost = this.scfilters.indexerScore(key, doc, dbDatum, fetchDatum, parse,
-          inlinks, boost);
+      boost = this.scfilters.indexerScore(key, doc, dbDatum, fetchDatum, parse, inlinks, boost);
     } catch (final ScoringFilterException e) {
       reporter.incrCounter("IndexerStatus", "errors (ScoringFilter)", 1);
       if (LOG.isWarnEnabled()) {

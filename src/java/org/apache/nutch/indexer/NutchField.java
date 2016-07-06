@@ -126,6 +126,8 @@ public class NutchField implements Writable {
       } else if (value instanceof Date) {
         Date date = (Date) value;
         out.writeLong(date.getTime());
+      } else {
+    	  System.out.println(value.getClass());
       }
     }
   }

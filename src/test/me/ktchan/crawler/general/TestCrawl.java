@@ -199,7 +199,7 @@ public class TestCrawl {
 	 * 3娴嬭瘯鑳戒笉鑳芥姄鍒扮綉绔欎笂灞傜殑鍑犱釜缃戦〉锛屽埌Solr 绠＄悊浠嬮潰閲屽ご鐢ㄦ煡璇㈠姛鑳藉鏋滄湁璧勬枡锛屽氨鏄垚鍔熶簡銆�
 	 * 
 	 */
-	public void testInject() throws IOException {
+	public void testCrawl() throws IOException {
 
 		Injector injector = new Injector(conf);
 		Generator generator = new Generator(conf);

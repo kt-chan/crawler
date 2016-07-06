@@ -50,32 +50,32 @@ public class ParseData extends VersionedWritable {
 	private Outlink[] outlinks;
 	private Metadata contentMeta;
 	private Metadata parseMeta;
-	private Map<String, String[]> fields;
+	private Metadata tagFieldMeta;
 	private ParseStatus status;
 	private byte version = VERSION;
 
 	public ParseData() {
 		contentMeta = new Metadata();
 		parseMeta = new Metadata();
-		fields = new HashMap<String, String[]>();
+		tagFieldMeta = new Metadata();
 	}
 
 	public ParseData(ParseStatus status, String title, Outlink[] outlinks, Metadata contentMeta) {
-		this(status, title, outlinks, contentMeta, new Metadata(), new HashMap<String, String[]>());
+		this(status, title, outlinks, contentMeta, new Metadata(), new Metadata());
 	}
 
 	public ParseData(ParseStatus status, String title, Outlink[] outlinks, Metadata contentMeta, Metadata parseMeta) {
-		this(status, title, outlinks, contentMeta, new Metadata(), new HashMap<String, String[]>());
+		this(status, title, outlinks, contentMeta, parseMeta, new Metadata());
 	}
 
 	public ParseData(ParseStatus status, String title, Outlink[] outlinks, Metadata contentMeta, Metadata parseMeta,
-			HashMap<String, String[]> fields) {
+			Metadata tagFieldMeta) {
 		this.status = status;
 		this.title = title;
 		this.outlinks = outlinks;
 		this.contentMeta = contentMeta;
 		this.parseMeta = parseMeta;
-		this.fields = fields;
+		this.tagFieldMeta = tagFieldMeta;
 	}
 
 	//
@@ -111,12 +111,12 @@ public class ParseData extends VersionedWritable {
 		return parseMeta;
 	}
 
-	public Map<String, String[]> getFields() {
-		return this.fields;
+	public Metadata getTagFieldMeta() {
+		return this.tagFieldMeta;
 	}
 
-	public void setFields(Map<String, String[]> fields) {
-		this.fields = fields;
+	public void setFields(Metadata tagFieldMeta) {
+		this.tagFieldMeta = tagFieldMeta;
 	}
 
 	public void setParseMeta(Metadata parseMeta) {
@@ -179,6 +179,9 @@ public class ParseData extends VersionedWritable {
 		if (version > 3) {
 			parseMeta.clear();
 			parseMeta.readFields(in);
+			
+			tagFieldMeta.clear();
+			tagFieldMeta.readFields(in);
 		}
 	}
 
@@ -193,6 +196,7 @@ public class ParseData extends VersionedWritable {
 		}
 		contentMeta.write(out); // write content metadata
 		parseMeta.write(out);
+		tagFieldMeta.write(out);
 	}
 
 	public static ParseData read(DataInput in) throws IOException {
@@ -210,8 +214,11 @@ public class ParseData extends VersionedWritable {
 			return false;
 		ParseData other = (ParseData) o;
 		return this.status.equals(other.status) && this.title.equals(other.title)
-				&& Arrays.equals(this.outlinks, other.outlinks) && this.contentMeta.equals(other.contentMeta)
-				&& this.parseMeta.equals(other.parseMeta);
+				&& Arrays.equals(this.outlinks, other.outlinks) 
+				&& this.contentMeta.equals(other.contentMeta)
+				&& this.parseMeta.equals(other.parseMeta)
+				&& this.tagFieldMeta.equals(other.tagFieldMeta)
+				;
 	}
 
 	public String toString() {
@@ -230,6 +237,7 @@ public class ParseData extends VersionedWritable {
 
 		buffer.append("Content Metadata: " + contentMeta + "\n");
 		buffer.append("Parse Metadata: " + parseMeta + "\n");
+		buffer.append("TagField Metadata: " + tagFieldMeta + "\n");
 
 		return buffer.toString();
 	}

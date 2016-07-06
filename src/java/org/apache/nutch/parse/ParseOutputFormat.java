@@ -290,7 +290,7 @@ public class ParseOutputFormat implements OutputFormat<Text, Parse> {
         Outlink[] filteredLinks = outlinkList.toArray(new Outlink[outlinkList
             .size()]);
         parseData = new ParseData(parseData.getStatus(), parseData.getTitle(),
-            filteredLinks, parseData.getContentMeta(), parseData.getParseMeta());
+            filteredLinks, parseData.getContentMeta(), parseData.getParseMeta(), parseData.getTagFieldMeta());
         dataOut.append(key, parseData);
         if (!parse.isCanonical()) {
           CrawlDatum datum = new CrawlDatum();

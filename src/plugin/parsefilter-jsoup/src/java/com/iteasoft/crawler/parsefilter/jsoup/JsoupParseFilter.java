@@ -24,12 +24,12 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.nutch.metadata.Metadata;
 import org.apache.nutch.parse.HTMLMetaTags;
 import org.apache.nutch.parse.HtmlParseFilter;
 import org.apache.nutch.parse.Parse;
@@ -42,8 +42,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.DocumentFragment;
-
-import me.ktchan.crawler.util.DebugWriterUtil;
 
 /**
  * RegexParseFilter. If a regular expression matches either HTML or extracted
@@ -76,10 +74,12 @@ public class JsoupParseFilter implements HtmlParseFilter {
 
 //			// @@Test
 //			DebugWriterUtil.delete("./test/debug.txt");
-			Map<String, String[]> metadata = new HashMap<String, String[]>();
-			if (matches(html, field, jsoupRule, metadata)) {
-				parse.getData().getFields().putAll(metadata);
+			if (matches(html, field, jsoupRule, parse.getData().getTagFieldMeta())) {
+				parse.getData().getParseMeta().add("fieldMeta", "true");
+			}else{
+				parse.getData().getParseMeta().add("fieldMeta", "false");
 			}
+				
 
 //			// @@Test
 //			for (Entry<String, String[]> e : parse.getData().getFields().entrySet()) {
@@ -156,7 +156,7 @@ public class JsoupParseFilter implements HtmlParseFilter {
 		return this.conf;
 	}
 
-	private boolean matches(String html, String field, JsoupRule jsoupRule, Map<String, String[]> metadata) {
+	private boolean matches(String html, String field, JsoupRule jsoupRule, Metadata fieldMeta) {
 
 		boolean matched = false;
 		String attribute = jsoupRule.attribute;
@@ -202,7 +202,7 @@ public class JsoupParseFilter implements HtmlParseFilter {
 							i++;
 						}
 
-						metadata.put(content, outputs);
+						fieldMeta.addAll(content, outputs);
 						matched = true;
 					}
 				}
