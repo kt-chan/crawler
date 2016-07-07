@@ -34,6 +34,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.io.TemporaryFilesystem;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -42,6 +43,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.opera.core.systems.OperaDriver;
 
 public class HttpWebClient {
@@ -58,14 +60,13 @@ public class HttpWebClient {
 
 	public static ThreadLocal<WebDriver> threadWebDriver = new ThreadLocal<WebDriver>() {
 
-    @Override
-    protected WebDriver initialValue()
-    {
-      
-      WebDriver driver = new FirefoxDriver(getFireFoxProfile());
-      return driver;
-    };
-  };
+		@Override
+		protected WebDriver initialValue() {
+
+			WebDriver driver = new FirefoxDriver(getFireFoxProfile());
+			return driver;
+		};
+	};
 
 	public static WebDriver getDriverForPage(String url, Configuration conf) {
 		WebDriver driver = null;
@@ -77,6 +78,9 @@ public class HttpWebClient {
 			switch (driverType) {
 			case "firefox":
 				driver = new FirefoxDriver(getFireFoxProfile());
+				break;
+			case "htmlunit":
+				driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_38);
 				break;
 			case "chrome":
 				driver = new ChromeDriver();

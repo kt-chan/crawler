@@ -74,6 +74,14 @@
 	  <value>DefaultHandler</value>
 	  <description></description>
 	</property>
+
+<property>
+  <name>selenium.driver</name>
+  <value>htmlunit</value>
+  <description>
+    A String value representing the flavour of Selenium WebDriver() to use.
+  </description>
+</property>
 	
 	<property>
 	  <name>plugin.includes</name>
