@@ -199,8 +199,7 @@
       <packageset dir="${plugins.dir}/parse-metatags/src/java"/>
       <packageset dir="${plugins.dir}/parse-swf/src/java"/>
       <packageset dir="${plugins.dir}/parse-tika/src/java"/>
-      <packageset dir="${plugins.dir}/parse-zip/src/java"/>
-      <packageset dir="${plugins.dir}/parsefilter-jsoup/src/java"/>    	
+      <packageset dir="${plugins.dir}/parse-zip/src/java"/>    	
       <packageset dir="${plugins.dir}/parsefilter-regex/src/java"/>
       <packageset dir="${plugins.dir}/parsefilter-naivebayes/src/java"/>
       <packageset dir="${plugins.dir}/protocol-file/src/java"/>
@@ -638,8 +637,7 @@
       <packageset dir="${plugins.dir}/parse-js/src/java"/>
       <packageset dir="${plugins.dir}/parse-metatags/src/java"/>
       <packageset dir="${plugins.dir}/parse-swf/src/java"/>
-      <packageset dir="${plugins.dir}/parse-tika/src/java"/>
-      <packageset dir="${plugins.dir}/parsefilter-jsoup/src/java"/>    	
+      <packageset dir="${plugins.dir}/parse-tika/src/java"/>    	
       <packageset dir="${plugins.dir}/parsefilter-regex/src/java"/>
       <packageset dir="${plugins.dir}/parsefilter-naivebayes/src/java"/>    	
       <packageset dir="${plugins.dir}/parse-zip/src/java"/>
@@ -647,6 +645,7 @@
       <packageset dir="${plugins.dir}/protocol-ftp/src/java"/>
       <packageset dir="${plugins.dir}/protocol-http/src/java"/>
       <packageset dir="${plugins.dir}/protocol-httpclient/src/java"/>
+	  <packageset dir="${plugins.dir}/protocol-interactiveselenium/src/java"/>
       <packageset dir="${plugins.dir}/protocol-selenium/src/java"/>
       <packageset dir="${plugins.dir}/scoring-depth/src/java"/>
       <packageset dir="${plugins.dir}/scoring-similarity/src/java"/>
@@ -1052,8 +1051,6 @@
         <source path="${plugins.dir}/parse-tika/src/test/" />
         <source path="${plugins.dir}/parse-zip/src/java/" />
         <source path="${plugins.dir}/parse-zip/src/test/" />
-      	<source path="${plugins.dir}/parsefilter-jsoup/src/java/" />
-      	<source path="${plugins.dir}/parsefilter-jsoup/src/test/" />
         <source path="${plugins.dir}/parsefilter-regex/src/java/" />
         <source path="${plugins.dir}/parsefilter-regex/src/test/" />
         <source path="${plugins.dir}/parsefilter-naivebayes/src/java/" />
@@ -1064,6 +1061,7 @@
         <source path="${plugins.dir}/protocol-httpclient/src/test/" />
         <source path="${plugins.dir}/protocol-http/src/java/" />
         <source path="${plugins.dir}/protocol-http/src/test/" />
+        <source path="${plugins.dir}/protocol-interactiveselenium/src/java"/>
         <source path="${plugins.dir}/protocol-selenium/src/java"/>
         <source path="${plugins.dir}/scoring-depth/src/java/" />
         <source path="${plugins.dir}/scoring-similarity/src/java/" />

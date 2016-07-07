@@ -24,14 +24,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.nutch.crawl.CrawlDBTestUtil;
-import org.apache.nutch.crawl.CrawlDb;
-import org.apache.nutch.crawl.Generator;
-import org.apache.nutch.crawl.Injector;
-import org.apache.nutch.crawl.LinkDb;
-import org.apache.nutch.crawl.LinkDbReader;
 import org.apache.nutch.fetcher.Fetcher;
-import org.apache.nutch.indexer.IndexingJob;
-import org.apache.nutch.parse.ParseSegment;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +35,7 @@ import org.junit.Test;
  * into webdb 5. Reads crawldb entries and verifies contents
  * 
  */
-public class TestCrawl {
+public class TestFetch {
 
 	private Configuration conf;
 	private FileSystem fs;
@@ -69,27 +62,12 @@ public class TestCrawl {
 
 		fs = FileSystem.get(conf);
 		
+		
 		crawldbPath = new Path(testdir, "crawldb");
 		linkdbPath = new Path(testdir, "linkdb");
 		dumpPath = new Path(testdir, "dump");
 		segPath = new Path(testdir, "segments");
 		
-		if (fs.exists(crawldbPath)) {
-			fs.delete(crawldbPath, true);
-		}
-
-		if (fs.exists(segPath)) {
-			fs.delete(segPath, true);
-		}
-
-		if (fs.exists(dumpPath)) {
-			fs.delete(dumpPath, true);
-		}
-
-		fs.mkdirs(crawldbPath);
-		fs.mkdirs(segPath);
-		fs.mkdirs(dumpPath);
-
 		// setup arguments for calling nutch apps
 		args_setup();
 
@@ -101,60 +79,30 @@ public class TestCrawl {
 	}
 
 	@Test
-	public void testCrawl() throws IOException {
+	public void testInject() throws IOException {
 
-		Injector injector = new Injector(conf);
-		Generator generator = new Generator(conf);
 		Fetcher fetcher = new Fetcher(conf);
-		ParseSegment parser = new ParseSegment(conf);
-		CrawlDb crawldb = new CrawlDb(conf);
-		LinkDb linkdb = new LinkDb(conf);
-		LinkDbReader linkdbReader = null;
-
+		
 		try {
-			injector.run(NUTCH_ARGS.get(MODES.INJECT));
 
-			for (int i = 0; i < rounds; i++) {
+			FileStatus[] statuses = fs.listStatus(segPath);
 
-				generator.run(NUTCH_ARGS.get(MODES.GENERATE));
-				FileStatus[] statuses = fs.listStatus(segPath);
-				try {
-					for (FileStatus status : statuses) {
-						NUTCH_ARGS.get(MODES.FETCH)[0] = new Path(segPath.toString(), status.getPath().getName())
-								.toString();
-						fetcher.run(NUTCH_ARGS.get(MODES.FETCH));
-					}
+			for (FileStatus status : statuses) {
+				
+				Path fetchPath = new Path(segPath.toString(), status.getPath().getName());
+				NUTCH_ARGS.get(MODES.FETCH)[0] = fetchPath.toString();
 
-					for (FileStatus status : statuses) {
-						NUTCH_ARGS.get(MODES.PARSE)[0] = new Path(segPath.toString(), status.getPath().getName())
-								.toString();
-						parser.run(NUTCH_ARGS.get(MODES.PARSE));
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+				if (fs.exists(new Path(fetchPath, "crawl_fetch"))) {
+					fs.delete(new Path(fetchPath, "crawl_fetch"), true);
 				}
-				// update crawldb
-				crawldb.run(NUTCH_ARGS.get(MODES.UPDATEDB));
+
+				fetcher.run(NUTCH_ARGS.get(MODES.FETCH));
 			}
-
-			// invertlinks
-			linkdb.run(NUTCH_ARGS.get(MODES.INVERTLINKS));
-
-			// indexing to solr
-			IndexingJob solrIndexer = new IndexingJob(conf);
-			solrIndexer.run(NUTCH_ARGS.get(MODES.SOLRINDEXER));
-
-			// dump out for testing
-			linkdbReader = new LinkDbReader(conf, dumpPath);
-			linkdbReader.run(NUTCH_ARGS.get(MODES.LINKDBREADER));
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (parser != null) parser.close();
-			if (linkdb != null) linkdb.close();
-			if (linkdbReader != null) linkdbReader.close();
 		}
 	}
 

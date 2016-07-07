@@ -18,10 +18,10 @@ package org.apache.nutch.protocol.interactiveselenium;
 
 // JDK imports
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.PushbackInputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -34,11 +34,11 @@ import org.apache.nutch.metadata.SpellCheckedMetadata;
 import org.apache.nutch.net.protocols.HttpDateFormat;
 import org.apache.nutch.net.protocols.Response;
 import org.apache.nutch.protocol.ProtocolException;
-import org.apache.nutch.protocol.http.api.HttpException;
 import org.apache.nutch.protocol.http.api.HttpBase;
-import org.openqa.selenium.WebDriver;
-
+import org.apache.nutch.protocol.http.api.HttpException;
+import org.apache.nutch.protocol.interactiveselenium.handlers.InteractiveSeleniumHandler;
 import org.apache.nutch.protocol.selenium.HttpWebClient;
+import org.openqa.selenium.WebDriver;
 
 /* Most of this code was borrowed from protocol-htmlunit; which in turn borrowed it from protocol-httpclient */
 
@@ -251,8 +251,10 @@ public class HttpResponse implements Response {
     handlers = new InteractiveSeleniumHandler[handlerNames.length];
     for (int i = 0; i < handlerNames.length; i++) {
         try {
-            String classToLoad = this.getClass().getPackage().getName() + "." + handlerNames[i];
-            handlers[i] = InteractiveSeleniumHandler.class.cast(Class.forName(classToLoad).newInstance());
+        	//Override class loader path for handler
+            //String classToLoad = this.getClass().getPackage().getName() + ".handlers." + handlerNames[i];
+            String classToLoad = "me.ktchan.crawler.fetch.interactiveselenium.handlers"+ "." + handlerNames[i];
+        	handlers[i] = InteractiveSeleniumHandler.class.cast(Class.forName(classToLoad).newInstance());
             Http.LOG.info("Successfully loaded " + classToLoad);
         } catch (ClassNotFoundException e) {
             Http.LOG.info("Unable to load Handler class for: " + handlerNames[i]);
@@ -276,7 +278,6 @@ public class HttpResponse implements Response {
         }
 
         WebDriver driver = HttpWebClient.getDriverForPage(url.toString(), conf);
-
         processedPage += handler.processDriver(driver);
 
         HttpWebClient.cleanUpDriver(driver);

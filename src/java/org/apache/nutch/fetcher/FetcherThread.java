@@ -251,8 +251,7 @@ public class FetcherThread extends Thread {
               LOG.debug("redirectCount=" + redirectCount);
             }
             redirecting = false;
-            Protocol protocol = this.protocolFactory.getProtocol(fit.url
-                .toString());
+            Protocol protocol = this.protocolFactory.getProtocol(fit.url.toString());
             BaseRobotRules rules = protocol.getRobotRules(fit.url, fit.datum);
             if (!rules.isAllowed(fit.u.toString())) {
               // unblock
@@ -289,8 +288,7 @@ public class FetcherThread extends Thread {
                 }
               }
             }
-            ProtocolOutput output = protocol.getProtocolOutput(fit.url,
-                fit.datum);
+            ProtocolOutput output = protocol.getProtocolOutput(fit.url, fit.datum);
             ProtocolStatus status = output.getStatus();
             Content content = output.getContent();
             ParseStatus pstatus = null;

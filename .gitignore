@@ -5,4 +5,4 @@ logs/**
 runtime/**
 tmp/**
 test/**
-hadoop.log
+hadoop.log*
