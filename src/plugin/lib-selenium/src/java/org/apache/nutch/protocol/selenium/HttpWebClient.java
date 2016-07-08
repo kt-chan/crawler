@@ -32,6 +32,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -49,13 +50,23 @@ import com.opera.core.systems.OperaDriver;
 public class HttpWebClient {
 
 	private static final Logger LOG = LoggerFactory.getLogger(HttpWebClient.class);
+	private static String CHROME_DRIVER_EXECUTABLE = "~/chromedriver.exe";
+	private static String CHROME_DRIVER_EXTENSION_BLOCK_IMAGE = "~/block_image_1.1_0.crx";
 
 	private static FirefoxProfile getFireFoxProfile() {
 		FirefoxProfile profile = new FirefoxProfile();
 		profile.setPreference("permissions.default.stylesheet", 2);
 		profile.setPreference("permissions.default.image", 2);
 		profile.setPreference("dom.ipc.plugins.enabled.libflashplayer.so", "false");
+
 		return profile;
+	}
+
+	private static ChromeOptions getChromeOption(Configuration conf){
+		ChromeOptions options = new ChromeOptions();
+		String chromeExtensionBlockImagePath = conf.get("chrome.driver.extension.blockimage", CHROME_DRIVER_EXTENSION_BLOCK_IMAGE);
+		options.addExtensions(new File(chromeExtensionBlockImagePath));
+		return options;
 	}
 
 	public static ThreadLocal<WebDriver> threadWebDriver = new ThreadLocal<WebDriver>() {
@@ -83,7 +94,9 @@ public class HttpWebClient {
 				driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_38);
 				break;
 			case "chrome":
-				driver = new ChromeDriver();
+				String chromeDriverPath = conf.get("chrome.driver.executable", CHROME_DRIVER_EXECUTABLE);
+				System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+				driver = new ChromeDriver(getChromeOption(conf));
 				break;
 			case "safari":
 				driver = new SafariDriver();

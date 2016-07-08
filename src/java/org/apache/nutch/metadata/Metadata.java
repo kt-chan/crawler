@@ -110,18 +110,18 @@ public class Metadata implements Writable, CreativeCommons, DublinCore, HttpHead
 	 * 
 	 * @param name
 	 *            the metadata name.
-	 * @param newValues
+	 * @param addedValues
 	 *            the metadata value.
 	 */
-	public void addAll(final String name, final String[] newValues) {
-		String[] values = metadata.get(name);
-		if (values == null) {
-			this.metadata.put(name, newValues);
-		} else {
-			String[] newArray = new String[values.length + newValues.length];
-			System.arraycopy(values, 0, newArray, 0, values.length);
-			System.arraycopy(newValues, 0, newArray, values.length, newValues.length);
+	public void addAll(final String name, final String[] addedValues) {
+		String[] oldValues = metadata.get(name);
+		String[] newArray = addedValues;
+		if (oldValues != null) { 
+			newArray = new String[oldValues.length + addedValues.length];
+			System.arraycopy(oldValues, 0, newArray, 0, oldValues.length);
+			System.arraycopy(addedValues, 0, newArray, oldValues.length, addedValues.length);
 		}
+		this.metadata.put(name, newArray);
 	}
 
 	/**

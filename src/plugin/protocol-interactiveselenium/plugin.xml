@@ -41,7 +41,6 @@
                       class="org.apache.nutch.protocol.interactiveselenium.Http">
         <parameter name="protocolName" value="http"/>
       </implementation>
-
    </extension>
 
 </plugin>

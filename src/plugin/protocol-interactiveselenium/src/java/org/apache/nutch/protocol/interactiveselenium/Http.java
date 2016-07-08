@@ -16,44 +16,42 @@
  */
 package org.apache.nutch.protocol.interactiveselenium;
 
-// JDK imports
+//JDK imports
 import java.io.IOException;
 import java.net.URL;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.nutch.crawl.CrawlDatum;
 import org.apache.nutch.net.protocols.Response;
-import org.apache.nutch.protocol.http.api.HttpBase;
 import org.apache.nutch.protocol.ProtocolException;
 import org.apache.nutch.util.NutchConfiguration;
-
-import org.apache.nutch.protocol.interactiveselenium.HttpResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Http extends HttpBase {
+public class Http extends org.apache.nutch.protocol.httpclient.Http {
 
-  public static final Logger LOG = LoggerFactory.getLogger(Http.class);
+	public static final Logger LOG = LoggerFactory.getLogger(Http.class);
 
-  public Http() {
-    super(LOG);
-  }
+	public Http() {
+		super(LOG);
+	}
 
-  @Override
-  public void setConf(Configuration conf) {
-    super.setConf(conf);
-  }
+	@Override
+	public void setConf(Configuration conf) {
+		super.setConf(conf);
+	}
 
-  public static void main(String[] args) throws Exception {
-    Http http = new Http();
-    http.setConf(NutchConfiguration.create());
-    main(http, args);
-  }
 
-  @Override
-  protected Response getResponse(URL url, CrawlDatum datum, boolean redirect)
-      throws ProtocolException, IOException {
-    return new HttpResponse(this, url, datum);
-  }
+	public static void main(String[] args) throws Exception {
+		Http http = new Http();
+		http.setConf(NutchConfiguration.create());
+		main(http, args);
+	}
+
+	@Override
+	protected Response getResponse(URL url, CrawlDatum datum, boolean redirect) throws ProtocolException, IOException {
+		resolveCredentials(url);
+		return new HttpResponse(this, url, datum, redirect);
+	}
 
 }

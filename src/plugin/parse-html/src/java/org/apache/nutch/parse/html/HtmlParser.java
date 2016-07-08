@@ -385,8 +385,9 @@ public class HtmlParser implements Parser {
 							String[] selectorAttr = selectorPair.split(":");
 							Elements selected = e1.select(selectorAttr[0]);
 							if (selected.size() > 0) {
-								String key = selectorAttr[0].replaceAll("\\[", "").replaceAll("\\]", "")
-										.replaceAll("\\.", "");
+								/*String key = selectorAttr[0].replaceAll("\\[", "").replaceAll("\\]", "")
+										.replaceAll("\\.", "");*/
+								String key = selectorAttr[1];
 
 								if (selectorAttr[1].equals("*") && !selected.text().trim().isEmpty()) {
 									outputs[i] = key + ":" + selected.text();

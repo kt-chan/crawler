@@ -8,89 +8,112 @@
 		<name>http.agent.name</name>
 		<value>iteas_crawler</value>
 		<description>HTTP 'User-Agent' request header. MUST NOT be empty -
-		please set this to a single word uniquely related to your organization.
+			please set this to a single word uniquely related to your
+			organization.
 
-		NOTE: You should also check other related properties:
+			NOTE: You should also check other related properties:
 
-		http.robots.agents
-		http.agent.description
-		http.agent.url
-		http.agent.email
-		http.agent.version
+			http.robots.agents
+			http.agent.description
+			http.agent.url
+			http.agent.email
+			http.agent.version
 
-		and set their values appropriately.
+			and set their values appropriately.
 
 		</description>
 	</property>
-	
+
 	<property>
 		<name>plugin.folders</name>
 		<value>./src/plugin</value>
 	</property>
 
 	<property>
-	  <name>parser.timeout</name>
-	  <value>-1</value>
+		<name>parser.timeout</name>
+		<value>-1</value>
 	</property>
 
 	<property>
-	  <name>http.timeout</name>
-	  <value>60000</value>
+		<name>http.timeout</name>
+		<value>60000</value>
 	</property>
-	
+
 	<property>
-	  <name>http.content.limit</name>
-	  <value>-1</value>
+		<name>http.content.limit</name>
+		<value>-1</value>
 	</property>
-	
+
 	<property>
 		<name>hadoop.tmp.dir</name>
 		<value>tmp</value>
 	</property>
 
 	<property>
-	  <name>parser.html.impl</name>
-	  <value>jsoup</value>
-	  <description>HTML Parser implementation. Currently the following keywords
-	  are recognized: "neko" uses NekoHTML, "tagsoup" uses TagSoup.
-	  </description>
+		<name>parser.html.impl</name>
+		<value>jsoup</value>
+		<description>HTML Parser implementation. Currently the following
+			keywords
+			are recognized: "neko" uses NekoHTML, "tagsoup" uses TagSoup.
+		</description>
 	</property>
 
 	<property>
-	  <name>parser.character.encoding.default</name>
-	  <value>UTF-8</value>
-	  <description>The character encoding to fall back to when no other information
-	  is available</description>
-	</property>
-	
-	<property>
-	  <name>parsefilter.jsoup.file</name>
-	  <value>jsoup-parsefilter.txt</value>
-	  <description>The specific jsoup extraction rules</description>
-	</property>
-	
-	<property>
-	  <name>interactiveselenium.handlers</name>
-	  <value>DefaultHandler</value>
-	  <description></description>
+		<name>parser.character.encoding.default</name>
+		<value>UTF-8</value>
+		<description>The character encoding to fall back to when no other
+			information
+			is available
+		</description>
 	</property>
 
-<property>
-  <name>selenium.driver</name>
-  <value>htmlunit</value>
-  <description>
-    A String value representing the flavour of Selenium WebDriver() to use.
-  </description>
-</property>
+	<property>
+		<name>parsefilter.jsoup.file</name>
+		<value>jsoup-parsefilter.txt</value>
+		<description>The specific jsoup extraction rules</description>
+	</property>
+
+	<property>
+		<name>interactiveselenium.handlers</name>
+		<value>DefaultHandler</value>
+		<description></description>
+	</property>
+
+	<property>
+		<name>selenium.driver</name>
+		<value>chrome</value>
+		<description>
+			A String value representing the flavour of Selenium WebDriver() to
+			use.
+		</description>
+	</property>
+
+	<property>
+		<name>chrome.driver.executable</name>
+		<value>C:/Program Files (x86)/Google/Chrome/Application/chromedriver.exe</value>
+		<description>
+			A String value for chromedriver.exe
+		</description>
+	</property>
+
+	<property>
+		<name>chrome.driver.extension.blockimage</name>
+		<value>C:/Users/KT/AppData/Local/Google/Chrome/User Data/Default/Extensions/pehaalcefcjfccdpbckoablngfkfgfgj/1.1_0.crx</value>
+		<description>
+			String value for path to blockimage chrome extension ctx.
+		</description>
+	</property>	
 	
 	<property>
-	  <name>plugin.includes</name>
-	  <value>protocol-interactiveselenium|urlfilter-regex|parse-(html|tika|jsoup)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)</value>
-	  <description>Regular expression naming plugin directory names to
-	  include.  Any plugin not matching this expression is excluded.
-	  In any case you need at least include the nutch-extensionpoints plugin. By
-	  default Nutch includes crawling just HTML and plain text via HTTP,
-	  and basic indexing and search plugins.
-	  </description>
+		<name>plugin.includes</name>
+		<value>protocol-interactiveselenium|urlfilter-regex|parse-(html|tika|jsoup)|index-(basic|anchor)|indexer-solr|scoring-opic|urlnormalizer-(pass|regex|basic)
+		</value>
+		<description>Regular expression naming plugin directory names to
+			include. Any plugin not matching this expression is excluded.
+			In any case you need at least include the nutch-extensionpoints plugin.
+			By
+			default Nutch includes crawling just HTML and plain text via HTTP,
+			and basic indexing and search plugins.
+		</description>
 	</property>
 </configuration>
