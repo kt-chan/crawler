@@ -115,7 +115,7 @@
   <target name="compile-plugins" depends="init, resolve-default" description="--> compile plugins only">
     <ant dir="src/plugin" target="deploy" inheritAll="false"/>
   </target>
-
+	
   <!-- ================================================================== -->
   <!-- Make nutch.jar                                                     -->
   <!-- ================================================================== -->

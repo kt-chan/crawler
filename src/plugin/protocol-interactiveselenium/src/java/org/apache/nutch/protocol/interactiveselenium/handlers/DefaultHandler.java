@@ -17,11 +17,15 @@
 
 package org.apache.nutch.protocol.interactiveselenium.handlers;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class DefaultHandler implements InteractiveSeleniumHandler {
     public String processDriver(WebDriver driver) {
-    	return null;
+    	System.out.println("Hello Default InteractiveSeleniumHandler");
+    	StringBuffer line =  new StringBuffer();
+    	line.append(driver.findElement(By.tagName("body")).getAttribute("innerHTML"));
+    	return line.toString();
     }
 
     public boolean shouldProcessURL(String URL) {

@@ -252,8 +252,7 @@ public class HttpResponse implements Response {
     for (int i = 0; i < handlerNames.length; i++) {
         try {
         	//Override class loader path for handler
-            //String classToLoad = this.getClass().getPackage().getName() + ".handlers." + handlerNames[i];
-            String classToLoad = "me.ktchan.crawler.fetch.interactiveselenium.handlers"+ "." + handlerNames[i];
+            String classToLoad = this.getClass().getPackage().getName() + ".handlers." + handlerNames[i];            
         	handlers[i] = InteractiveSeleniumHandler.class.cast(Class.forName(classToLoad).newInstance());
             Http.LOG.info("Successfully loaded " + classToLoad);
         } catch (ClassNotFoundException e) {
