@@ -341,6 +341,10 @@
     <field name="cache" type="string" stored="true" indexed="false"/>
     <field name="tstamp" type="date" stored="true" indexed="false"/>
 
+	<!-- catch-all tags -->
+    <!-- <field name="tagFields" type="text_general" stored="true" indexed="true" multiValued="true"/> -->
+	<dynamicField name="tag*" type="text_general" stored="true" indexed="true" multiValued="true"/>
+	
     <!-- fields for index-geoip plugin -->
     <field name="ip" type="string" stored="true" indexed="true" />
     <field name="cityName" type="string" stored="true" indexed="true" />
@@ -380,6 +384,7 @@
     <!-- catch-all field -->
     <field name="text" type="text_general" stored="false" indexed="true" multiValued="true"/>
 
+	
     <!-- fields for index-anchor plugin -->
     <field name="anchor" type="text_general" stored="true" indexed="true"
         multiValued="true"/>

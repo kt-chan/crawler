@@ -64,7 +64,7 @@
 	</mimeType>
 
 	<mimeType name="text/xml">
-		<plugin id="parse-jsoup" />
+		<plugin id="parse-tika" />
 		<plugin id="feed" />
 	</mimeType>
 
@@ -81,13 +81,18 @@
 	<!--  alias mappings for parse-xxx names to the actual extension implementation 
 	ids described in each plugin's plugin.xml file -->
 	<aliases>
-		<alias name="parse-jsoup" extension-id="org.apache.nutch.parse.html.HtmlParser" />  
-		<alias name="parse-tika" extension-id="org.apache.nutch.parse.tika.TikaParser" />
+		<alias name="parse-tika" 
+			extension-id="org.apache.nutch.parse.tika.TikaParser" />
 		<alias name="parse-ext" extension-id="ExtParser" />
+		<alias name="parse-html"
+			extension-id="org.apache.nutch.parse.html.HtmlParser" />
 		<alias name="parse-js" extension-id="JSParser" />
-		<alias name="feed" extension-id="org.apache.nutch.parse.feed.FeedParser" />
-		<alias name="parse-swf" extension-id="org.apache.nutch.parse.swf.SWFParser" />
-		<alias name="parse-zip" extension-id="org.apache.nutch.parse.zip.ZipParser" />
+		<alias name="feed"
+			extension-id="org.apache.nutch.parse.feed.FeedParser" />
+		<alias name="parse-swf"
+			extension-id="org.apache.nutch.parse.swf.SWFParser" />
+		<alias name="parse-zip"
+			extension-id="org.apache.nutch.parse.zip.ZipParser" />
 	</aliases>
 	
 </parse-plugins>

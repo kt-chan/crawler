@@ -30,59 +30,55 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This handler clicks all the <a hfer="javascript:void(null);"> tags
- * because it considers them as not usual links but ajax links/interactions. This uses the same logic of 
- * DefalultMultiInteractionHandler. 
+ * This handler clicks all the <a hfer="javascript:void(null);"> tags because it
+ * considers them as not usual links but ajax links/interactions. This uses the
+ * same logic of DefalultMultiInteractionHandler.
  */
-public class DefaultClickAllAjaxLinksHandler implements InteractiveSeleniumHandler {
-  private static final Logger LOG = LoggerFactory
-      .getLogger(DefaultClickAllAjaxLinksHandler.class);
+public class DefaultClickAllAjaxLinksHandler extends DefaultHandler implements InteractiveSeleniumHandler {
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultClickAllAjaxLinksHandler.class);
+	
+	public DefaultClickAllAjaxLinksHandler(Configuration conf)
+	{
+		super(conf);
+	}
 
-  public String processDriver(WebDriver driver) {
-    
-    String accumulatedData = "";
-    try {
-      
+	public String processDriver(WebDriver driver) {
 
-      driver.findElement(By.tagName("body")).getAttribute("innerHTML");
-      Configuration conf = NutchConfiguration.create();
-      new WebDriverWait(driver, conf.getLong("libselenium.page.load.delay", 3));
+		String accumulatedData = "";
+		try {
 
-      List<WebElement> atags = driver.findElements(By.tagName("a"));
-      int numberofajaxlinks = atags.size();
-      for (int i = 0; i < numberofajaxlinks; i++) {
+			driver.findElement(By.tagName("body")).getAttribute("innerHTML");
+			Configuration conf = NutchConfiguration.create();
+			new WebDriverWait(driver, conf.getLong("libselenium.page.load.delay", 3));
 
-        if (atags.get(i).getAttribute("href") != null
-            && atags.get(i).getAttribute("href")
-                .equals("javascript:void(null);")) {
+			List<WebElement> atags = driver.findElements(By.tagName("a"));
+			int numberofajaxlinks = atags.size();
+			for (int i = 0; i < numberofajaxlinks; i++) {
 
-          atags.get(i).click();
+				if (atags.get(i).getAttribute("href") != null
+						&& atags.get(i).getAttribute("href").equals("javascript:void(null);")) {
 
-          if (i == numberofajaxlinks - 1) {
-            // append everything to the driver in the last round
-            JavascriptExecutor jsx = (JavascriptExecutor) driver;
-            jsx.executeScript("document.body.innerHTML=document.body.innerHTML "
-                + accumulatedData + ";");
-            continue;
-          }
+					atags.get(i).click();
 
-          accumulatedData += driver.findElement(By.tagName("body"))
-              .getAttribute("innerHTML");
+					if (i == numberofajaxlinks - 1) {
+						// append everything to the driver in the last round
+						JavascriptExecutor jsx = (JavascriptExecutor) driver;
+						jsx.executeScript("document.body.innerHTML=document.body.innerHTML " + accumulatedData + ";");
+						continue;
+					}
 
-          // refreshing the handlers as the page was interacted with
-          driver.navigate().refresh();
-          new WebDriverWait(driver, conf.getLong("libselenium.page.load.delay",
-              3));
-          atags = driver.findElements(By.tagName("a"));
-        }
-      }
-    } catch (Exception e) {
-      LOG.info(StringUtils.stringifyException(e));
-    }
-    return accumulatedData;
-  }
+					accumulatedData += driver.findElement(By.tagName("body")).getAttribute("innerHTML");
 
-  public boolean shouldProcessURL(String URL) {
-    return true;
-  }
+					// refreshing the handlers as the page was interacted with
+					driver.navigate().refresh();
+					new WebDriverWait(driver, conf.getLong("libselenium.page.load.delay", 3));
+					atags = driver.findElements(By.tagName("a"));
+				}
+			}
+		} catch (Exception e) {
+			LOG.info(StringUtils.stringifyException(e));
+		}
+		return accumulatedData;
+	}
+
 }

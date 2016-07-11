@@ -17,9 +17,11 @@
 
 package org.apache.nutch.protocol.interactiveselenium.handlers;
 
+import org.apache.hadoop.conf.Configuration;
 import org.openqa.selenium.WebDriver;
 
 public interface InteractiveSeleniumHandler {
     public String processDriver(WebDriver driver);
     public boolean shouldProcessURL(String URL);
+    public Configuration getConf();
 }

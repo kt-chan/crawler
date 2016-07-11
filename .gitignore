@@ -6,3 +6,4 @@ runtime/**
 tmp/**
 test/**
 hadoop.log*
+debug.log*

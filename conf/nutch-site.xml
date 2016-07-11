@@ -75,7 +75,7 @@
 
 	<property>
 		<name>interactiveselenium.handlers</name>
-		<value>DefaultHandler</value>
+		<value>QunarHandler</value>
 		<description></description>
 	</property>
 

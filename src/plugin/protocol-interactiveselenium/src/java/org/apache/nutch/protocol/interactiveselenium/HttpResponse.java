@@ -38,6 +38,7 @@ import org.apache.nutch.net.protocols.HttpDateFormat;
 import org.apache.nutch.net.protocols.Response;
 import org.apache.nutch.protocol.ProtocolException;
 import org.apache.nutch.protocol.http.api.HttpBase;
+import org.apache.nutch.protocol.interactiveselenium.handlers.InteractiveHandlerFactory;
 import org.apache.nutch.protocol.interactiveselenium.handlers.InteractiveSeleniumHandler;
 import org.apache.nutch.protocol.selenium.HttpWebClient;
 import org.openqa.selenium.WebDriver;
@@ -61,7 +62,7 @@ public class HttpResponse implements Response {
 		// Prepare GET method for HTTP request
 		this.conf = http.getConf();
 		this.url = url;
-		
+
 		GetMethod get = new GetMethod(url.toString());
 		get.setFollowRedirects(followRedirects);
 		get.setDoAuthentication(true);
@@ -212,18 +213,7 @@ public class HttpResponse implements Response {
 		String[] handlerNames = handlerConfig.split(",");
 		handlers = new InteractiveSeleniumHandler[handlerNames.length];
 		for (int i = 0; i < handlerNames.length; i++) {
-			try {
-				// Override class loader path for handler
-				String classToLoad = this.getClass().getPackage().getName() + ".handlers." + handlerNames[i];
-				handlers[i] = InteractiveSeleniumHandler.class.cast(Class.forName(classToLoad).newInstance());
-				Http.LOG.info("Successfully loaded " + classToLoad);
-			} catch (ClassNotFoundException e) {
-				Http.LOG.info("Unable to load Handler class for: " + handlerNames[i]);
-			} catch (InstantiationException e) {
-				Http.LOG.info("Unable to instantiate Handler: " + handlerNames[i]);
-			} catch (IllegalAccessException e) {
-				Http.LOG.info("Illegal access with Handler: " + handlerNames[i]);
-			}
+			handlers[i] = InteractiveHandlerFactory.getHandler(this.conf, handlerNames[i]);
 		}
 	}
 

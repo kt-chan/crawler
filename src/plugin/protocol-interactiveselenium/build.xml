@@ -30,6 +30,7 @@
     <fileset dir="${nutch.root}/build">
       <include name="**/lib-http/*.jar" />
       <include name="**/lib-selenium/*.jar" />
+      <include name="**/protocol-httpclient/*.jar" />
       <include name="**/protocol-selenium/*.jar" />
     </fileset>
   </path>

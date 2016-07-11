@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.ktchan.crawler.general;
+package me.ktchan.crawler.util;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.nutch.crawl.CrawlDBTestUtil;
 import org.apache.nutch.crawl.CrawlDb;
 import org.apache.nutch.crawl.Generator;
 import org.apache.nutch.crawl.Injector;
@@ -32,9 +31,6 @@ import org.apache.nutch.crawl.LinkDbReader;
 import org.apache.nutch.fetcher.Fetcher;
 import org.apache.nutch.indexer.IndexingJob;
 import org.apache.nutch.parse.ParseSegment;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Basic injector test: 1. Creates a text file with urls 2. Injects them into
@@ -42,18 +38,19 @@ import org.junit.Test;
  * into webdb 5. Reads crawldb entries and verifies contents
  * 
  */
-public class TestCrawl {
+public class Crawl {
 
 	private Configuration conf;
 	private FileSystem fs;
+	private int rounds = 1;
+
 	private final static Path testdir = new Path("./test/");
 	private final static String solrPath = "http://localhost:8983/solr";
-	private final static int rounds = 1;
 
 	public static enum MODES {
 		INJECT, GENERATE, FETCH, PARSE, UPDATEDB, INVERTLINKS, LINKDBREADER, SOLRINDEXER
 	}
-	
+
 	public final static HashMap<MODES, String[]> NUTCH_ARGS = new HashMap<>();
 
 	Path crawldbPath;
@@ -62,18 +59,37 @@ public class TestCrawl {
 	Path urlPath;
 	Path segPath;
 
-	@Before
-	public void setUp() throws Exception {
-		conf = CrawlDBTestUtil.createConfiguration();
+	public static void main(String[] args) {
+
+		Crawl myCrawler = new Crawl();
+
+		if (args.length == 1) {
+			myCrawler.rounds = Integer.parseInt(args[0].trim());
+		}
+
+		try {
+			myCrawler.setup();
+			myCrawler.run();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void setup() throws Exception {
+		conf = new Configuration();
+		conf.addResource("nutch-default.xml");
+		conf.addResource("nutch-site.xml");
+
 		urlPath = new Path("./seed/lead.txt");
 
 		fs = FileSystem.get(conf);
-		
+
 		crawldbPath = new Path(testdir, "crawldb");
 		linkdbPath = new Path(testdir, "linkdb");
 		dumpPath = new Path(testdir, "dump");
 		segPath = new Path(testdir, "segments");
-		
+
 		if (fs.exists(crawldbPath)) {
 			fs.delete(crawldbPath, true);
 		}
@@ -95,13 +111,11 @@ public class TestCrawl {
 
 	}
 
-	@After
 	public void tearDown() throws IOException {
 		// fs.delete(testdir, true);
 	}
 
-	@Test
-	public void testCrawl() throws IOException {
+	public void run() throws IOException {
 
 		Injector injector = new Injector(conf);
 		Generator generator = new Generator(conf);
@@ -152,9 +166,12 @@ public class TestCrawl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (parser != null) parser.close();
-			if (linkdb != null) linkdb.close();
-			if (linkdbReader != null) linkdbReader.close();
+			if (parser != null)
+				parser.close();
+			if (linkdb != null)
+				linkdb.close();
+			if (linkdbReader != null)
+				linkdbReader.close();
 		}
 	}
 
