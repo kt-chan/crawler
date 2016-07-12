@@ -11,10 +11,18 @@ public class ParserQunarHandler {
 		List<Outlink> newOutlinks = new ArrayList<Outlink>();
 
 		for (int i = 0; i < outlinks.size(); i++) {
+
 			Outlink link = outlinks.get(i);
-			if (!link.getToUrl().endsWith("/#")) {
-				newOutlinks.add(link);
+
+			if (link.getToUrl().endsWith("/#")) {
+				continue;
 			}
+
+			if (link.getToUrl().endsWith("/")) {
+				continue;
+			}
+
+			newOutlinks.add(link);
 		}
 
 		outlinks.clear();

@@ -24,7 +24,9 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.nutch.crawl.CrawlDBTestUtil;
+import org.apache.nutch.crawl.CrawlDbReader;
 import org.apache.nutch.segment.SegmentReader;
+import org.apache.nutch.util.NutchJob;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +37,7 @@ import org.junit.Test;
  * into webdb 5. Reads crawldb entries and verifies contents
  * 
  */
-public class ReadSegData {
+public class OutputData {
 
 	private Configuration conf;
 	private FileSystem fs;
@@ -50,7 +52,8 @@ public class ReadSegData {
 
 	public final static Path segPath = new Path(testdir, "segments");
 	public final static Path dumpPath = new Path(testdir, "dump/segments");
-
+	public final static Path crawlDBPath = new Path(testdir, "crawldb");
+	public final static Path crawlDBDumpPath = new Path(testdir, "dump/crawldb");
 	@Before
 	public void setUp() throws Exception {
 		conf = CrawlDBTestUtil.createConfiguration();
@@ -60,6 +63,9 @@ public class ReadSegData {
 			fs.delete(dumpPath, true);
 		}
 		
+		if (fs.exists(crawlDBDumpPath)) {
+			fs.delete(crawlDBDumpPath, true);
+		}
 	}
 
 	@After
@@ -67,6 +73,15 @@ public class ReadSegData {
 
 	}
 
+	@Test
+	public void readDB() throws IOException {
+		
+		
+		CrawlDbReader dbReader = new CrawlDbReader();
+		dbReader.processDumpJob(crawlDBPath.toString(), crawlDBDumpPath.toString(), new NutchJob(conf), "normal", null, null, 0, null);
+		dbReader.close();
+	}
+	
 	@Test
 	public void readSeg() throws IOException {
 
