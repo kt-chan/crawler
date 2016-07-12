@@ -50,6 +50,7 @@ import org.apache.nutch.parse.ParseImpl;
 import org.apache.nutch.parse.ParseResult;
 import org.apache.nutch.parse.ParseStatus;
 import org.apache.nutch.parse.Parser;
+import org.apache.nutch.parse.html.handler.ParseHandlerFactory;
 import org.apache.nutch.plugin.Extension;
 import org.apache.nutch.plugin.PluginRepository;
 import org.apache.nutch.protocol.Content;
@@ -230,6 +231,7 @@ public class HtmlParser implements Parser {
 				LOG.trace("Getting links...");
 			}
 			utils.getOutlinks(baseTag != null ? baseTag : baseUrl, l, root);
+			ParseHandlerFactory.urlTransform(baseUrl, l);
 			outlinks = l.toArray(new Outlink[l.size()]);
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("found " + outlinks.length + " outlinks in " + content.getUrl());

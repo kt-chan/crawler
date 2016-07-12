@@ -74,6 +74,15 @@
 	</property>
 
 	<property>
+	   <name>db.max.outlinks.per.page</name>
+	   <value>-1</value>
+	   <description>The maximum number of outlinks that we'll process for a page.
+	   If this value is nonnegative (>=0), at most db.max.outlinks.per.page outlinks
+	   will be processed for a page; otherwise, all outlinks will be processed.
+	   </description>
+ 	</property>
+ 
+	<property>
 		<name>interactiveselenium.handlers</name>
 		<value>QunarHandler</value>
 		<description></description>

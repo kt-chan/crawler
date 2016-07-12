@@ -39,7 +39,7 @@ public class ReadSegData {
 
 	private Configuration conf;
 	private FileSystem fs;
-	private final static Path testdir = new Path("./test/");
+	private final static Path testdir = new Path("./data/test/");
 	private final static int rounds = 2;
 
 	public static enum MODES {

@@ -50,10 +50,7 @@ public class QunarHandler extends DefaultHandler implements InteractiveSeleniumH
 		 }
 
 		pass = this.getPageSource(driver, out);
-//		if (pass) {
-//			DebugWriterUtil.delete("./debug.log");
-//			DebugWriterUtil.write(out.toString(), "./debug.log");
-//		}
+
 		return out.toString();
 	}
 

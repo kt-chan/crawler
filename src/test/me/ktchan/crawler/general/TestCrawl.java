@@ -46,9 +46,9 @@ public class TestCrawl {
 
 	private Configuration conf;
 	private FileSystem fs;
-	private final static Path testdir = new Path("./test/");
+	private final static Path testdir = new Path("./data/test/");
 	private final static String solrPath = "http://localhost:8983/solr";
-	private final static int rounds = 2;
+	private final static int rounds = 1;
 
 	public static enum MODES {
 		INJECT, GENERATE, FETCH, PARSE, UPDATEDB, INVERTLINKS, LINKDBREADER, SOLRINDEXER
