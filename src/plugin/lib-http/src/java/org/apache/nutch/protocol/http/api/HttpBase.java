@@ -21,16 +21,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-// Logging imports
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.zip.ZipException;
 
+// Hadoop imports
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.util.StringUtils;
 // Nutch imports
 import org.apache.nutch.crawl.CrawlDatum;
 import org.apache.nutch.metadata.Nutch;
@@ -40,14 +43,11 @@ import org.apache.nutch.protocol.Protocol;
 import org.apache.nutch.protocol.ProtocolException;
 import org.apache.nutch.protocol.ProtocolOutput;
 import org.apache.nutch.protocol.ProtocolStatus;
-import org.apache.nutch.util.GZIPUtils;
 import org.apache.nutch.util.DeflateUtils;
-import org.apache.hadoop.util.StringUtils;
-
-// Hadoop imports
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
+import org.apache.nutch.util.GZIPUtils;
+// Logging imports
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // crawler-commons imports
 import crawlercommons.robots.BaseRobotRules;
@@ -458,7 +458,7 @@ public abstract class HttpBase implements Protocol {
   }
 
   public byte[] processGzipEncoded(byte[] compressed, URL url)
-      throws IOException {
+      throws ZipException {
 
     if (LOGGER.isTraceEnabled()) {
       LOGGER.trace("uncompressing....");
@@ -477,7 +477,7 @@ public abstract class HttpBase implements Protocol {
     }
 
     if (content == null)
-      throw new IOException("unzipBestEffort returned null");
+      throw new ZipException("unzipBestEffort returned null");
 
     if (LOGGER.isTraceEnabled()) {
       LOGGER.trace("fetched " + compressed.length

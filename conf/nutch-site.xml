@@ -98,7 +98,8 @@
 
 	<property>
 		<name>chrome.driver.extension.blockimage</name>
-		<value>C:/Users/KT/AppData/Local/Google/Chrome/User Data/Default/Extensions/pehaalcefcjfccdpbckoablngfkfgfgj/1.1_0.crx</value>
+		<!--  <value>C:/Users/KT/AppData/Local/Google/Chrome/User Data/Default/Extensions/pehaalcefcjfccdpbckoablngfkfgfgj/1.1_0.crx</value> -->
+			<value>C:/Users/chanc10/AppData/Local/Google/Chrome/User Data/Default/Extensions/pehaalcefcjfccdpbckoablngfkfgfgj/1.1_0.crx</value>
 		<description>
 			String value for path to blockimage chrome extension ctx.
 		</description>

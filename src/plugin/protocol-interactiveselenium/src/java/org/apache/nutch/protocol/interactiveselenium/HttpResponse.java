@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.zip.ZipException;
 
 //HTTP Client imports
 import org.apache.commons.httpclient.Header;
@@ -154,23 +155,32 @@ public class HttpResponse implements Response {
 				if (getHeader(Response.LOCATION) != null)
 					fetchTrace.append("; Location: " + getHeader(Response.LOCATION));
 			}
-			// Extract gzip, x-gzip and deflate content
-			if (content != null) {
-				// check if we have to uncompress it
-				String contentEncoding = headers.get(Response.CONTENT_ENCODING);
-				if (contentEncoding != null && Http.LOG.isTraceEnabled())
-					fetchTrace.append("; Content-Encoding: " + contentEncoding);
-				if ("gzip".equals(contentEncoding) || "x-gzip".equals(contentEncoding)) {
-					content = http.processGzipEncoded(content, url);
-					if (Http.LOG.isTraceEnabled())
-						fetchTrace.append("; extracted to " + content.length + " bytes");
-				} else if ("deflate".equals(contentEncoding)) {
-					content = http.processDeflateEncoded(content, url);
-					if (Http.LOG.isTraceEnabled())
-						fetchTrace.append("; extracted to " + content.length + " bytes");
-				}
-			}
 
+			try {
+				// Extract gzip, x-gzip and deflate content
+				if (content != null) {
+					byte[] zip_content = null;
+					// check if we have to uncompress it
+					String contentEncoding = headers.get(Response.CONTENT_ENCODING);
+					if (contentEncoding != null && Http.LOG.isTraceEnabled())
+						fetchTrace.append("; Content-Encoding: " + contentEncoding);
+					if ("gzip".equals(contentEncoding) || "x-gzip".equals(contentEncoding)) {
+						zip_content = http.processGzipEncoded(content, url);
+						if (Http.LOG.isTraceEnabled())
+							fetchTrace.append("; extracted to " + content.length + " bytes");
+					} else if ("deflate".equals(contentEncoding)) {
+						zip_content = http.processDeflateEncoded(content, url);
+						if (Http.LOG.isTraceEnabled())
+							fetchTrace.append("; extracted to " + content.length + " bytes");
+					}
+					if (zip_content != null) {
+						content = zip_content;
+					}
+				}
+			} catch (ZipException e) {
+				Http.LOG.warn(e.getLocalizedMessage());
+			}
+			
 			// Logger trace message
 			if (Http.LOG.isTraceEnabled()) {
 				Http.LOG.trace(fetchTrace.toString());
